@@ -25,13 +25,7 @@ const Home = () => {
           </FadeUp>
           <FadeUp delay={150}>
             <div className="my-8 flex justify-center">
-              <img
-                src={heroClockImg}
-                alt="Oyrial minimalist wall clock"
-                width={500}
-                height={500}
-                className="w-56 md:w-80 opacity-90 hover:scale-[1.03] transition-transform duration-[2000ms]"
-              />
+              <HeroClock />
             </div>
           </FadeUp>
           <FadeUp delay={200}>
