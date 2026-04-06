@@ -80,6 +80,53 @@
   }
 }
 
+/* Hero Clock — no glow in light mode */
+.clock-epoxy-dark-glow,
+.clock-center-glow {
+  opacity: 0;
+}
+.clock-marker,
+.clock-hand,
+.clock-second-hand,
+.clock-pivot {
+  filter: none;
+}
+.clock-wood-frame {
+  filter: none;
+}
+
+/* Dark mode lume glow */
+@media (prefers-color-scheme: dark) {
+  .clock-marker {
+    filter: url(#markerGlow);
+  }
+  .clock-hand {
+    filter: url(#handGlow);
+  }
+  .clock-second-hand line,
+  .clock-second-hand circle {
+    filter: drop-shadow(0 0 4px rgba(201, 169, 78, 0.5));
+  }
+  .clock-pivot {
+    filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.4));
+  }
+  .clock-epoxy-dark-glow {
+    opacity: 1;
+  }
+  .clock-center-glow {
+    opacity: 1;
+  }
+  .clock-wood-frame {
+    filter: drop-shadow(0 0 8px rgba(139, 105, 20, 0.15));
+  }
+  .clock-epoxy-face {
+    box-shadow: inset 0 0 30px rgba(26, 74, 74, 0.1);
+  }
+  .clock-outer-ring {
+    opacity: 0.4;
+  }
+}
+
 /* Scroll animation */
 .fade-up {
   opacity: 0;

@@ -4,7 +4,7 @@ import { products } from "@/data/products";
 import { Volume2, Paintbrush, MessageCircle, Heart } from "lucide-react";
 import { useWishlist } from "@/context/WishlistContext";
 import { toast } from "sonner";
-import heroClockImg from "@/assets/hero-clock.png";
+import HeroClock from "@/components/HeroClock";
 import insta1 from "@/assets/insta-clock-1.jpg";
 import insta2 from "@/assets/insta-clock-2.jpg";
 import insta3 from "@/assets/insta-clock-3.jpg";
