@@ -1,34 +1,37 @@
 import { Link } from "react-router-dom";
 import FadeUp from "@/components/FadeUp";
 import { products } from "@/data/products";
+import { Volume2, Paintbrush, MessageCircle } from "lucide-react";
 import heroClockImg from "@/assets/hero-clock.png";
-import insta1 from "@/assets/insta-1.jpg";
-import insta2 from "@/assets/insta-2.jpg";
-import insta3 from "@/assets/insta-3.jpg";
-import insta4 from "@/assets/insta-4.jpg";
+import insta1 from "@/assets/insta-clock-1.jpg";
+import insta2 from "@/assets/insta-clock-2.jpg";
+import insta3 from "@/assets/insta-clock-3.jpg";
+import insta4 from "@/assets/insta-clock-4.jpg";
 
 const Home = () => {
   return (
     <main>
       {/* HERO */}
       <section className="relative min-h-screen flex items-center justify-center bg-oyrial-charcoal overflow-hidden">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <img
-            src={heroClockImg}
-            alt="Oyrial minimalist wall clock"
-            width={500}
-            height={500}
-            className="w-64 md:w-96 opacity-80 hover:scale-[1.03] transition-transform duration-[2000ms]"
-          />
-        </div>
         <div className="relative z-10 text-center px-6">
           <FadeUp>
             <h1 className="font-serif text-5xl md:text-8xl text-oyrial-offwhite tracking-tight">
               Time Gone Wild
             </h1>
           </FadeUp>
+          <FadeUp delay={150}>
+            <div className="my-8 flex justify-center">
+              <img
+                src={heroClockImg}
+                alt="Oyrial minimalist wall clock"
+                width={500}
+                height={500}
+                className="w-56 md:w-80 opacity-90 hover:scale-[1.03] transition-transform duration-[2000ms]"
+              />
+            </div>
+          </FadeUp>
           <FadeUp delay={200}>
-            <p className="mt-4 text-oyrial-muted text-base md:text-lg max-w-md mx-auto">
+            <p className="mt-2 text-oyrial-muted text-base md:text-lg max-w-md mx-auto">
               Handcrafted wall clocks for the intentional home.
             </p>
           </FadeUp>
@@ -79,11 +82,15 @@ const Home = () => {
                   <div className="mt-4 flex justify-between items-start">
                     <div>
                       <h3 className="font-serif text-xl text-oyrial-charcoal">{p.name}</h3>
-                      <p className="text-sm text-oyrial-muted mt-1">৳ {p.price.toLocaleString()}</p>
+                      <p className="text-sm text-oyrial-muted mt-1">৳&nbsp;{p.price.toLocaleString()}</p>
                     </div>
-                    <span className="text-xs tracking-widest uppercase text-oyrial-muted group-hover:text-oyrial-charcoal transition-colors">
+                    <Link
+                      to={`/product/${p.id}`}
+                      className="px-4 py-2 bg-oyrial-charcoal text-oyrial-offwhite text-[11px] tracking-widest uppercase hover:bg-oyrial-black transition-colors"
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       View
-                    </span>
+                    </Link>
                   </div>
                 </Link>
               </FadeUp>
@@ -112,13 +119,15 @@ const Home = () => {
           </FadeUp>
           <FadeUp delay={450}>
             <div className="mt-12 grid grid-cols-2 gap-6">
-              <div className="border border-oyrial-muted/20 p-6">
+              <div className="bg-oyrial-offwhite/5 rounded-lg p-6 flex flex-col items-center gap-3">
+                <Volume2 size={28} className="text-oyrial-offwhite/60" />
                 <h3 className="font-serif text-xl text-oyrial-offwhite">Silent Movement</h3>
-                <p className="text-sm text-oyrial-muted mt-2">No tick. Just presence.</p>
+                <p className="text-sm text-oyrial-muted">No tick. Just presence.</p>
               </div>
-              <div className="border border-oyrial-muted/20 p-6">
+              <div className="bg-oyrial-offwhite/5 rounded-lg p-6 flex flex-col items-center gap-3">
+                <Paintbrush size={28} className="text-oyrial-offwhite/60" />
                 <h3 className="font-serif text-xl text-oyrial-offwhite">Handcrafted Finish</h3>
-                <p className="text-sm text-oyrial-muted mt-2">Every detail, intentional.</p>
+                <p className="text-sm text-oyrial-muted">Every detail, intentional.</p>
               </div>
             </div>
           </FadeUp>
@@ -130,7 +139,7 @@ const Home = () => {
         <div className="container max-w-2xl text-center">
           <FadeUp>
             <h2 className="font-serif text-3xl md:text-5xl text-oyrial-offwhite mb-4">
-              Can't Find Exactly What You Want?
+              Make It Yours.
             </h2>
           </FadeUp>
           <FadeUp delay={150}>
@@ -150,8 +159,9 @@ const Home = () => {
                 href="https://wa.me/8801XXXXXXXXX?text=Hi%20Oyrial!%20I'd%20like%20to%20customize%20a%20clock."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-8 py-4 bg-oyrial-offwhite text-oyrial-black text-sm tracking-widest uppercase hover:bg-oyrial-white transition-colors min-h-[48px] flex items-center"
+                className="px-8 py-4 bg-[#25D366] text-white text-sm tracking-widest uppercase hover:bg-[#1da851] transition-colors min-h-[48px] flex items-center gap-2"
               >
+                <MessageCircle size={18} />
                 WhatsApp Us →
               </a>
             </div>
@@ -179,7 +189,7 @@ const Home = () => {
                 >
                   <img
                     src={img}
-                    alt={`Oyrial Instagram ${i + 1}`}
+                    alt={`Oyrial wall clock lifestyle ${i + 1}`}
                     loading="lazy"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />

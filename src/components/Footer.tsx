@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Instagram } from "lucide-react";
+import { Instagram, MessageCircle } from "lucide-react";
 
 const Footer = () => (
   <footer className="bg-oyrial-charcoal text-oyrial-offwhite py-16">
@@ -13,16 +13,18 @@ const Footer = () => (
             href="https://instagram.com/oyrial"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-oyrial-offwhite transition-colors"
+            className="hover:text-oyrial-offwhite transition-colors flex items-center gap-1.5"
           >
-            <Instagram size={18} />
+            <Instagram size={16} />
+            Instagram
           </a>
           <a
             href="https://wa.me/8801XXXXXXXXX"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-oyrial-offwhite transition-colors"
+            className="hover:text-oyrial-offwhite transition-colors flex items-center gap-1.5"
           >
+            <MessageCircle size={16} />
             WhatsApp
           </a>
           <a href="mailto:hello@oyrial.com" className="hover:text-oyrial-offwhite transition-colors">
