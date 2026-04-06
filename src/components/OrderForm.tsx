@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { Input } from "@/components/ui/input";
 import { CheckCircle } from "lucide-react";
 import FadeUp from "@/components/FadeUp";
 
@@ -100,19 +99,10 @@ const OrderForm = ({ defaultQuantity = 1, showQuantity = false, onSubmit }: Orde
         </div>
       )}
       <div>
-        <label className="block text-xs text-oyrial-muted uppercase tracking-wider mb-2">Payment Method *</label>
-        <RadioGroup value={form.payment} onValueChange={(v) => setForm({ ...form, payment: v })} className="flex flex-wrap gap-4">
-          {[
-            { value: "cod", label: "Cash on Delivery" },
-            { value: "bkash", label: "bKash" },
-            { value: "nagad", label: "Nagad" },
-          ].map((opt) => (
-            <label key={opt.value} className="flex items-center gap-2 cursor-pointer text-sm text-oyrial-charcoal">
-              <RadioGroupItem value={opt.value} />
-              {opt.label}
-            </label>
-          ))}
-        </RadioGroup>
+        <p className="text-sm text-oyrial-charcoal">
+          <span className="text-xs text-oyrial-muted uppercase tracking-wider">Payment:</span>{" "}
+          Cash on Delivery
+        </p>
       </div>
       {showQuantity && (
         <div>
