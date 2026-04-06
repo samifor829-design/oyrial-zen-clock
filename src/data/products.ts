@@ -12,6 +12,7 @@ export interface Product {
   size: string;
   sizeCategory: "30cm" | "40cm" | "custom";
   isNew?: boolean;
+  inStock: boolean;
   features: string[];
   specs: { label: string; value: string }[];
 }
@@ -27,6 +28,7 @@ export const products: Product[] = [
     size: "30cm",
     sizeCategory: "30cm",
     isNew: true,
+    inStock: true,
     features: ["Silent Movement", "Matte Finish", "Minimal Design", "Gift Box Included"],
     specs: [
       { label: "Diameter", value: "30cm" },
@@ -45,6 +47,7 @@ export const products: Product[] = [
     image: clock02,
     size: "30cm",
     sizeCategory: "30cm",
+    inStock: true,
     features: ["Silent Movement", "Matte Finish", "Minimal Design", "Gift Box Included"],
     specs: [
       { label: "Diameter", value: "30cm" },
@@ -63,6 +66,7 @@ export const products: Product[] = [
     image: clock03,
     size: "40cm",
     sizeCategory: "40cm",
+    inStock: false,
     features: ["Silent Movement", "Matte Finish", "Roman Numerals", "Gift Box Included"],
     specs: [
       { label: "Diameter", value: "40cm" },

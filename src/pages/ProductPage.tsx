@@ -3,7 +3,9 @@ import { useParams, Link } from "react-router-dom";
 import FadeUp from "@/components/FadeUp";
 import { products } from "@/data/products";
 import { useCart } from "@/context/CartContext";
+import { useWishlist } from "@/context/WishlistContext";
 import { toast } from "sonner";
+import { Heart } from "lucide-react";
 import OrderForm from "@/components/OrderForm";
 import detailFrame from "@/assets/detail-frame.jpg";
 import detailHands from "@/assets/detail-hands.jpg";
@@ -18,6 +20,7 @@ const reviews = [
 const ProductPage = () => {
   const { id } = useParams();
   const { addItem } = useCart();
+  const { isInWishlist, toggleItem } = useWishlist();
   const product = products.find((p) => p.id === id);
   const [addedLabel, setAddedLabel] = useState(false);
   const [showOrderForm, setShowOrderForm] = useState(false);
@@ -34,7 +37,11 @@ const ProductPage = () => {
     );
   }
 
+  const wishlisted = isInWishlist(product.id);
+  const relatedProducts = products.filter((p) => p.id !== product.id).slice(0, 3);
+
   const handleAdd = () => {
+    if (!product.inStock) return;
     addItem({ id: product.id, name: product.name, price: product.price, image: product.image });
     toast.success(`${product.name} added to cart`);
     setAddedLabel(true);
@@ -42,8 +49,14 @@ const ProductPage = () => {
   };
 
   const handleBuyNow = () => {
+    if (!product.inStock) return;
     setShowOrderForm(true);
     setTimeout(() => orderFormRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
+  };
+
+  const handleToggleWishlist = () => {
+    toggleItem({ id: product.id, name: product.name, price: product.price, image: product.image });
+    toast.success(wishlisted ? "Removed from wishlist" : "Added to wishlist");
   };
 
   return (
@@ -51,7 +64,12 @@ const ProductPage = () => {
       {/* Product hero */}
       <div className="md:grid md:grid-cols-2 md:min-h-[calc(100vh-5rem)]">
         {/* Image */}
-        <div className="bg-oyrial-grey flex items-center justify-center p-8 md:p-16">
+        <div className="bg-oyrial-grey flex items-center justify-center p-8 md:p-16 relative">
+          {!product.inStock && (
+            <div className="absolute inset-0 bg-oyrial-charcoal/40 flex items-center justify-center z-10">
+              <span className="text-oyrial-offwhite text-sm tracking-widest uppercase">Out of Stock</span>
+            </div>
+          )}
           <FadeUp>
             <img src={product.image} alt={product.name} width={600} height={600} className="w-full max-w-lg" />
           </FadeUp>
@@ -60,15 +78,27 @@ const ProductPage = () => {
         {/* Details */}
         <div className="p-6 md:p-16 flex flex-col justify-center">
           <FadeUp>
-            <h1 className="font-serif text-3xl md:text-5xl text-oyrial-charcoal">{product.name}</h1>
+            <div className="flex items-start justify-between">
+              <h1 className="font-serif text-3xl md:text-5xl text-oyrial-charcoal">{product.name}</h1>
+              <button onClick={handleToggleWishlist} className="mt-1 p-2 hover:opacity-70 transition-opacity">
+                <Heart size={24} className={wishlisted ? "fill-oyrial-charcoal text-oyrial-charcoal" : "text-oyrial-muted"} />
+              </button>
+            </div>
           </FadeUp>
           <FadeUp delay={100}>
             <p className="mt-3 text-oyrial-muted">{product.description}</p>
           </FadeUp>
           <FadeUp delay={200}>
             <p className="mt-4 font-serif text-2xl text-oyrial-charcoal">
-              ৳ {product.price.toLocaleString()}
+              ৳&nbsp;{product.price.toLocaleString()}
             </p>
+            {/* Stock status */}
+            <div className="mt-2 flex items-center gap-2">
+              <span className={`w-2 h-2 rounded-full ${product.inStock ? "bg-green-500" : "bg-red-500"}`} />
+              <span className={`text-xs ${product.inStock ? "text-green-600" : "text-red-500"}`}>
+                {product.inStock ? "In Stock" : "Out of Stock"}
+              </span>
+            </div>
           </FadeUp>
           <FadeUp delay={300}>
             <div className="mt-6 flex flex-wrap gap-4 text-sm text-oyrial-muted">
@@ -89,25 +119,40 @@ const ProductPage = () => {
           </FadeUp>
           <FadeUp delay={400}>
             <div className="mt-8 flex gap-3">
-              <button
-                onClick={handleAdd}
-                disabled={addedLabel}
-                className={`flex-1 text-sm tracking-widest uppercase py-4 transition-colors min-h-[48px] ${
-                  addedLabel
-                    ? "bg-oyrial-charcoal/80 text-oyrial-offwhite cursor-default"
-                    : "bg-oyrial-charcoal text-oyrial-offwhite hover:bg-oyrial-black"
-                }`}
-              >
-                {addedLabel ? "✓ Added" : "Add to Cart"}
-              </button>
-              <button
-                onClick={handleBuyNow}
-                className="flex-1 border border-oyrial-charcoal text-oyrial-charcoal text-sm tracking-widest uppercase py-4 hover:bg-oyrial-charcoal hover:text-oyrial-offwhite transition-colors min-h-[48px]"
-              >
-                Buy Now
-              </button>
+              {product.inStock ? (
+                <>
+                  <button
+                    onClick={handleAdd}
+                    disabled={addedLabel}
+                    className={`flex-1 text-sm tracking-widest uppercase py-4 transition-colors min-h-[48px] ${
+                      addedLabel
+                        ? "bg-oyrial-charcoal/80 text-oyrial-offwhite cursor-default"
+                        : "bg-oyrial-charcoal text-oyrial-offwhite hover:bg-oyrial-black"
+                    }`}
+                  >
+                    {addedLabel ? "✓ Added" : "Add to Cart"}
+                  </button>
+                  <button
+                    onClick={handleBuyNow}
+                    className="flex-1 border border-oyrial-charcoal text-oyrial-charcoal text-sm tracking-widest uppercase py-4 hover:bg-oyrial-charcoal hover:text-oyrial-offwhite transition-colors min-h-[48px]"
+                  >
+                    Buy Now
+                  </button>
+                </>
+              ) : (
+                <button
+                  disabled
+                  className="flex-1 bg-oyrial-muted/30 text-oyrial-muted text-sm tracking-widest uppercase py-4 cursor-not-allowed min-h-[48px]"
+                >
+                  Currently Unavailable
+                </button>
+              )}
             </div>
+            {/* Delivery estimate */}
             <p className="mt-3 text-xs text-oyrial-muted text-center">
+              🚚 Estimated Delivery: 3–5 business days within Dhaka | 5–7 days outside Dhaka
+            </p>
+            <p className="mt-1 text-xs text-oyrial-muted text-center">
               Free delivery within Dhaka · Custom orders via WhatsApp
             </p>
           </FadeUp>
@@ -178,6 +223,46 @@ const ProductPage = () => {
           </FadeUp>
         </div>
       </div>
+
+      {/* You Might Also Like */}
+      {relatedProducts.length > 0 && (
+        <div className="container pb-16 md:pb-24">
+          <FadeUp>
+            <h3 className="font-serif text-3xl text-oyrial-charcoal mb-10 text-center">You Might Also Like</h3>
+          </FadeUp>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+            {relatedProducts.map((p, i) => (
+              <FadeUp key={p.id} delay={i * 100}>
+                <Link to={`/product/${p.id}`} className="group block">
+                  <div className="relative bg-oyrial-grey aspect-square overflow-hidden">
+                    <img
+                      src={p.image}
+                      alt={p.name}
+                      loading="lazy"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    {!p.inStock && (
+                      <div className="absolute inset-0 bg-oyrial-charcoal/40 flex items-center justify-center">
+                        <span className="text-oyrial-offwhite text-xs tracking-widest uppercase">Out of Stock</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="mt-3">
+                    <h3 className="font-serif text-lg text-oyrial-charcoal">{p.name}</h3>
+                    <p className="text-sm text-oyrial-muted mt-0.5">৳&nbsp;{p.price.toLocaleString()}</p>
+                    <div className="mt-1 flex items-center gap-1.5">
+                      <span className={`w-1.5 h-1.5 rounded-full ${p.inStock ? "bg-green-500" : "bg-red-500"}`} />
+                      <span className={`text-[11px] ${p.inStock ? "text-green-600" : "text-red-500"}`}>
+                        {p.inStock ? "In Stock" : "Out of Stock"}
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              </FadeUp>
+            ))}
+          </div>
+        </div>
+      )}
     </main>
   );
 };
