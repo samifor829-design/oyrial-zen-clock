@@ -37,6 +37,9 @@ const OrderForm = ({ defaultQuantity = 1, showQuantity = false, onSubmit }: Orde
             Our team member will call you soon to confirm your order.
           </p>
           <p className="mt-1 text-xs text-oyrial-muted">
+            Expected delivery: 3–5 business days.
+          </p>
+          <p className="mt-1 text-xs text-oyrial-muted">
             We typically call within 1–2 hours. Please keep your phone available.
           </p>
           <a
