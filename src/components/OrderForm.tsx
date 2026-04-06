@@ -17,7 +17,6 @@ const OrderForm = ({ defaultQuantity = 1, showQuantity = false, onSubmit }: Orde
     phone: "",
     address: "",
     quantity: defaultQuantity,
-    payment: "cod",
     note: "",
   });
 
