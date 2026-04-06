@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import FadeUp from "@/components/FadeUp";
 import { products } from "@/data/products";
-import { Volume2, Paintbrush, MessageCircle } from "lucide-react";
+import { Volume2, Paintbrush, MessageCircle, Heart } from "lucide-react";
+import { useWishlist } from "@/context/WishlistContext";
+import { toast } from "sonner";
 import heroClockImg from "@/assets/hero-clock.png";
 import insta1 from "@/assets/insta-clock-1.jpg";
 import insta2 from "@/assets/insta-clock-2.jpg";
@@ -9,6 +11,8 @@ import insta3 from "@/assets/insta-clock-3.jpg";
 import insta4 from "@/assets/insta-clock-4.jpg";
 
 const Home = () => {
+  const { isInWishlist, toggleItem } = useWishlist();
+
   return (
     <main>
       {/* HERO */}
@@ -65,34 +69,55 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {products.map((p, i) => (
               <FadeUp key={p.id} delay={i * 150}>
-                <Link to={`/product/${p.id}`} className="group block">
-                  <div className="relative bg-oyrial-grey aspect-square overflow-hidden">
-                    <img
-                      src={p.image}
-                      alt={p.name}
-                      loading="lazy"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                    {p.isNew && (
-                      <span className="absolute top-4 left-4 bg-oyrial-charcoal text-oyrial-offwhite text-[10px] tracking-widest uppercase px-3 py-1">
-                        New Drop
-                      </span>
-                    )}
-                  </div>
+                <div className="group block relative">
+                  <Link to={`/product/${p.id}`}>
+                    <div className="relative bg-oyrial-grey aspect-square overflow-hidden">
+                      <img
+                        src={p.image}
+                        alt={p.name}
+                        loading="lazy"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      />
+                      {p.isNew && (
+                        <span className="absolute top-4 left-4 bg-oyrial-charcoal text-oyrial-offwhite text-[10px] tracking-widest uppercase px-3 py-1">
+                          New Drop
+                        </span>
+                      )}
+                      {!p.inStock && (
+                        <div className="absolute inset-0 bg-oyrial-charcoal/40 flex items-center justify-center">
+                          <span className="text-oyrial-offwhite text-xs tracking-widest uppercase">Out of Stock</span>
+                        </div>
+                      )}
+                    </div>
+                  </Link>
+                  <button
+                    onClick={() => {
+                      toggleItem({ id: p.id, name: p.name, price: p.price, image: p.image });
+                      toast.success(isInWishlist(p.id) ? "Removed from wishlist" : "Added to wishlist");
+                    }}
+                    className="absolute top-4 right-4 z-10 p-1.5 hover:opacity-80 transition-opacity"
+                  >
+                    <Heart size={20} className={isInWishlist(p.id) ? "fill-oyrial-offwhite text-oyrial-offwhite" : "text-oyrial-offwhite/70"} />
+                  </button>
                   <div className="mt-4 flex justify-between items-start">
                     <div>
                       <h3 className="font-serif text-xl text-oyrial-charcoal">{p.name}</h3>
                       <p className="text-sm text-oyrial-muted mt-1">৳&nbsp;{p.price.toLocaleString()}</p>
+                      <div className="mt-1 flex items-center gap-1.5">
+                        <span className={`w-1.5 h-1.5 rounded-full ${p.inStock ? "bg-green-500" : "bg-red-500"}`} />
+                        <span className={`text-[11px] ${p.inStock ? "text-green-600" : "text-red-500"}`}>
+                          {p.inStock ? "In Stock" : "Out of Stock"}
+                        </span>
+                      </div>
                     </div>
                     <Link
                       to={`/product/${p.id}`}
                       className="px-4 py-2 bg-oyrial-charcoal text-oyrial-offwhite text-[11px] tracking-widest uppercase hover:bg-oyrial-black transition-colors"
-                      onClick={(e) => e.stopPropagation()}
                     >
                       View
                     </Link>
                   </div>
-                </Link>
+                </div>
               </FadeUp>
             ))}
           </div>
