@@ -1,8 +1,10 @@
+import { useState, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import FadeUp from "@/components/FadeUp";
 import { products } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 import { toast } from "sonner";
+import OrderForm from "@/components/OrderForm";
 import detailFrame from "@/assets/detail-frame.jpg";
 import detailHands from "@/assets/detail-hands.jpg";
 import detailDial from "@/assets/detail-dial.jpg";
@@ -17,6 +19,9 @@ const ProductPage = () => {
   const { id } = useParams();
   const { addItem } = useCart();
   const product = products.find((p) => p.id === id);
+  const [addedLabel, setAddedLabel] = useState(false);
+  const [showOrderForm, setShowOrderForm] = useState(false);
+  const orderFormRef = useRef<HTMLDivElement>(null);
 
   if (!product) {
     return (
@@ -32,6 +37,13 @@ const ProductPage = () => {
   const handleAdd = () => {
     addItem({ id: product.id, name: product.name, price: product.price, image: product.image });
     toast.success(`${product.name} added to cart`);
+    setAddedLabel(true);
+    setTimeout(() => setAddedLabel(false), 2000);
+  };
+
+  const handleBuyNow = () => {
+    setShowOrderForm(true);
+    setTimeout(() => orderFormRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
   };
 
   return (
@@ -76,16 +88,42 @@ const ProductPage = () => {
             <p className="mt-3 text-sm text-oyrial-muted">Size: {product.size} diameter</p>
           </FadeUp>
           <FadeUp delay={400}>
-            <button
-              onClick={handleAdd}
-              className="mt-8 w-full bg-oyrial-charcoal text-oyrial-offwhite text-sm tracking-widest uppercase py-4 hover:bg-oyrial-black transition-colors min-h-[48px]"
-            >
-              Add to Cart
-            </button>
+            <div className="mt-8 flex gap-3">
+              <button
+                onClick={handleAdd}
+                disabled={addedLabel}
+                className={`flex-1 text-sm tracking-widest uppercase py-4 transition-colors min-h-[48px] ${
+                  addedLabel
+                    ? "bg-oyrial-charcoal/80 text-oyrial-offwhite cursor-default"
+                    : "bg-oyrial-charcoal text-oyrial-offwhite hover:bg-oyrial-black"
+                }`}
+              >
+                {addedLabel ? "✓ Added" : "Add to Cart"}
+              </button>
+              <button
+                onClick={handleBuyNow}
+                className="flex-1 border border-oyrial-charcoal text-oyrial-charcoal text-sm tracking-widest uppercase py-4 hover:bg-oyrial-charcoal hover:text-oyrial-offwhite transition-colors min-h-[48px]"
+              >
+                Buy Now
+              </button>
+            </div>
             <p className="mt-3 text-xs text-oyrial-muted text-center">
               Free delivery within Dhaka · Custom orders via WhatsApp
             </p>
           </FadeUp>
+
+          {/* Buy Now Order Form */}
+          <div
+            ref={orderFormRef}
+            className={`overflow-hidden transition-all duration-500 ease-in-out ${
+              showOrderForm ? "max-h-[800px] opacity-100 mt-8" : "max-h-0 opacity-0"
+            }`}
+          >
+            <div className="border-t border-oyrial-charcoal/10 pt-6">
+              <h3 className="font-serif text-xl text-oyrial-charcoal mb-4">Complete Your Order</h3>
+              <OrderForm showQuantity onSubmit={() => setShowOrderForm(true)} />
+            </div>
+          </div>
 
           <FadeUp delay={450}>
             <div className="mt-10 border-t border-oyrial-charcoal/10 pt-8">
