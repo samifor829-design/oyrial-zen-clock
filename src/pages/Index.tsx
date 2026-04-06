@@ -4,7 +4,7 @@ import { products } from "@/data/products";
 import { Volume2, Paintbrush, MessageCircle, Heart } from "lucide-react";
 import { useWishlist } from "@/context/WishlistContext";
 import { toast } from "sonner";
-import heroClockImg from "@/assets/hero-clock.png";
+import HeroClock from "@/components/HeroClock";
 import insta1 from "@/assets/insta-clock-1.jpg";
 import insta2 from "@/assets/insta-clock-2.jpg";
 import insta3 from "@/assets/insta-clock-3.jpg";
@@ -25,13 +25,7 @@ const Home = () => {
           </FadeUp>
           <FadeUp delay={150}>
             <div className="my-8 flex justify-center">
-              <img
-                src={heroClockImg}
-                alt="Oyrial minimalist wall clock"
-                width={500}
-                height={500}
-                className="w-56 md:w-80 opacity-90 hover:scale-[1.03] transition-transform duration-[2000ms]"
-              />
+              <HeroClock />
             </div>
           </FadeUp>
           <FadeUp delay={200}>
