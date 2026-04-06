@@ -2,9 +2,10 @@ import { Link } from "react-router-dom";
 import { useCart } from "@/context/CartContext";
 import { Minus, Plus, X } from "lucide-react";
 import FadeUp from "@/components/FadeUp";
+import OrderForm from "@/components/OrderForm";
 
 const Cart = () => {
-  const { items, updateQuantity, removeItem, total } = useCart();
+  const { items, updateQuantity, removeItem, total, clearCart } = useCart();
 
   if (items.length === 0) {
     return (
@@ -65,23 +66,12 @@ const Cart = () => {
 
         <FadeUp>
           <div className="mt-8 border-t border-oyrial-charcoal/10 pt-6">
-            <div className="flex justify-between font-serif text-xl text-oyrial-charcoal">
+            <div className="flex justify-between font-serif text-xl text-oyrial-charcoal mb-8">
               <span>Total</span>
               <span>৳ {total.toLocaleString()}</span>
             </div>
-            <a
-              href={`https://wa.me/8801XXXXXXXXX?text=${encodeURIComponent(
-                `Hi Oyrial! I'd like to order:\n${items.map((i) => `${i.name} x${i.quantity}`).join("\n")}\nTotal: ৳${total.toLocaleString()}`
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-6 w-full inline-flex items-center justify-center bg-oyrial-charcoal text-oyrial-offwhite text-sm tracking-widest uppercase py-4 hover:bg-oyrial-black transition-colors min-h-[48px]"
-            >
-              Checkout via WhatsApp
-            </a>
-            <p className="mt-3 text-xs text-oyrial-muted text-center">
-              We'll confirm your order and arrange delivery.
-            </p>
+            <h3 className="font-serif text-xl text-oyrial-charcoal mb-4">Checkout</h3>
+            <OrderForm onSubmit={clearCart} />
           </div>
         </FadeUp>
       </div>
