@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
+import { Settings as SettingsIcon } from "lucide-react";
 import { useWishlist } from "@/context/WishlistContext";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
