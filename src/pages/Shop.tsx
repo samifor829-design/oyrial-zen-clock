@@ -6,7 +6,7 @@ import { products } from "@/data/products";
 import { useWishlist } from "@/context/WishlistContext";
 import { toast } from "sonner";
 
-const filters = ["All", "30cm", "40cm", "Custom"] as const;
+const filters = ["All", "Custom", "Signature", "Classic", "Essential"] as const;
 
 const Shop = () => {
   const [active, setActive] = useState<string>("All");
@@ -17,7 +17,7 @@ const Shop = () => {
       ? products
       : active === "Custom"
       ? []
-      : products.filter((p) => p.sizeCategory === active);
+      : products.filter((p) => p.tier === active.toLowerCase());
 
   return (
     <main className="bg-oyrial-offwhite pt-24 pb-20 min-h-screen">

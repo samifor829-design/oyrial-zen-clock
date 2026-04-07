@@ -28,6 +28,7 @@ export const products: Product[] = [
     image: clock01,
     size: "30cm",
     sizeCategory: "30cm",
+    tier: "essential",
     isNew: true,
     inStock: true,
     features: ["Silent Movement", "Matte Finish", "Minimal Design", "Gift Box Included"],
@@ -48,6 +49,7 @@ export const products: Product[] = [
     image: clock02,
     size: "30cm",
     sizeCategory: "30cm",
+    tier: "classic",
     inStock: true,
     features: ["Silent Movement", "Matte Finish", "Minimal Design", "Gift Box Included"],
     specs: [
@@ -67,6 +69,7 @@ export const products: Product[] = [
     image: clock03,
     size: "40cm",
     sizeCategory: "40cm",
+    tier: "signature",
     inStock: false,
     features: ["Silent Movement", "Matte Finish", "Roman Numerals", "Gift Box Included"],
     specs: [
