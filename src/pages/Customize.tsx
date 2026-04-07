@@ -104,6 +104,7 @@ const Customize = () => {
     if (!vision.trim()) newErrors.vision = "Please describe your vision.";
     if (!fullName.trim()) newErrors.fullName = "Full name is required.";
     if (!email.trim()) newErrors.email = "Email is required.";
+    if (!phone.trim()) newErrors.phone = "Phone number is required.";
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length > 0) return;
