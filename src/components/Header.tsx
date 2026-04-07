@@ -41,8 +41,8 @@ const Header = () => {
         }`}
       >
         <div className="container flex items-center justify-between h-16 md:h-20">
-          <Link to="/" className="flex items-center pl-4 md:pl-6 hover:opacity-80 hover:scale-105 transition-all duration-200 ease-out">
-            <img src={oyrialLogo} alt="Oyrial logo" className={`h-6 sm:h-7 md:h-8 w-auto ${isDark ? "" : "invert"}`} />
+          <Link to="/" className="flex items-center pl-5 md:pl-7 hover:opacity-80 hover:scale-105 transition-all duration-200 ease-out">
+            <img src={isDark ? oyrialLogoWhite : oyrialLogoDark} alt="Oyrial logo" className="h-8 sm:h-9 md:h-10 lg:h-12 w-auto" />
           </Link>
 
           {/* Desktop nav */}
