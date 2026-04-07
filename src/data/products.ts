@@ -11,6 +11,7 @@ export interface Product {
   image: string;
   size: string;
   sizeCategory: "30cm" | "40cm" | "custom";
+  tier: "signature" | "classic" | "essential";
   isNew?: boolean;
   inStock: boolean;
   features: string[];
