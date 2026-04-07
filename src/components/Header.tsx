@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import oyrialLogo from "@/assets/oyrial-logo.png";
 import { ShoppingBag, Menu, X, Heart, User } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
@@ -35,7 +36,8 @@ const Header = () => {
         }`}
       >
         <div className="container flex items-center justify-between h-16 md:h-20">
-          <Link to="/" className={`font-serif text-2xl md:text-3xl tracking-wider ${isDark ? "text-oyrial-offwhite" : "text-oyrial-charcoal"}`}>
+          <Link to="/" className={`flex items-center gap-2 font-serif text-2xl md:text-3xl tracking-wider ${isDark ? "text-oyrial-offwhite" : "text-oyrial-charcoal"}`}>
+            <img src={oyrialLogo} alt="Oyrial logo" className={`h-7 md:h-8 w-auto ${isDark ? "" : "invert"}`} />
             Oyrial
           </Link>
 
