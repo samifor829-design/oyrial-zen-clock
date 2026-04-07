@@ -20,8 +20,7 @@ const Home = () => {
       <section className="relative min-h-screen flex items-center justify-center bg-oyrial-charcoal overflow-hidden">
         <div className="relative z-10 text-center px-6">
           <FadeUp>
-            <h1 className="font-serif text-5xl md:text-8xl text-oyrial-offwhite tracking-tight flex items-center justify-center gap-3 md:gap-4">
-              <img src={oyrialLogo} alt="Oyrial logo" className="h-10 md:h-16 w-auto" />
+            <h1 className="font-serif text-5xl md:text-8xl text-oyrial-offwhite tracking-tight">
               Time Gone Wild
             </h1>
           </FadeUp>
