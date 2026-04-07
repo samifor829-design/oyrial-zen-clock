@@ -22,7 +22,7 @@ const Customize = () => {
             Our team will review your request and reach out within 24 hours to confirm details and pricing.
           </p>
           <a
-            href="https://wa.me/8801XXXXXXXXX?text=Hi%20Oyrial!%20I%20just%20submitted%20a%20custom%20order."
+            href="https://wa.me/8801609573884?text=Hi%20Oyrial!%20I%20just%20submitted%20a%20custom%20order."
             target="_blank"
             rel="noopener noreferrer"
             className="mt-8 inline-flex items-center gap-2 px-8 py-4 bg-[#25D366] text-oyrial-white text-sm tracking-widest uppercase min-h-[48px]"
@@ -173,7 +173,7 @@ const Customize = () => {
                   Message us on WhatsApp and we'll guide you through every detail personally.
                 </p>
                 <a
-                  href="https://wa.me/8801XXXXXXXXX?text=Hi%20Oyrial!%20I'd%20like%20to%20customize%20a%20clock."
+                  href="https://wa.me/8801609573884?text=Hi%20Oyrial!%20I'd%20like%20to%20customize%20a%20clock."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-6 inline-flex items-center gap-2 px-6 py-4 bg-[#25D366] text-oyrial-white text-sm tracking-widest uppercase min-h-[48px]"

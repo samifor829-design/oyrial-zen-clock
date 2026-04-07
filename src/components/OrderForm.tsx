@@ -41,7 +41,7 @@ const OrderForm = ({ defaultQuantity = 1, showQuantity = false, onSubmit }: Orde
             We typically call within 1–2 hours. Please keep your phone available.
           </p>
           <a
-            href="https://wa.me/8801XXXXXXXXX?text=Hi%20Oyrial!%20I%20just%20placed%20an%20order."
+            href="https://wa.me/8801609573884?text=Hi%20Oyrial!%20I%20just%20placed%20an%20order."
             target="_blank"
             rel="noopener noreferrer"
             className="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-[#25D366] text-white text-sm tracking-wide rounded hover:bg-[#1fb855] transition-colors min-h-[48px]"

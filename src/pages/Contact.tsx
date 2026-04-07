@@ -26,7 +26,7 @@ const Contact = () => {
         <FadeUp delay={150}>
           <div className="mt-12 grid sm:grid-cols-3 gap-4">
             <a
-              href="https://wa.me/8801XXXXXXXXX?text=Hi%20Oyrial!"
+              href="https://wa.me/8801609573884?text=Hi%20Oyrial!"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-3 bg-[#25D366] text-white px-5 py-4 text-sm min-h-[48px]"
@@ -35,11 +35,11 @@ const Contact = () => {
               Chat with us
             </a>
             <a
-              href="mailto:hello@oyrial.com"
+              href="mailto:oyriall@gmail.com"
               className="flex items-center gap-3 border border-oyrial-charcoal/20 text-oyrial-charcoal px-5 py-4 text-sm hover:bg-oyrial-charcoal/5 transition-colors min-h-[48px]"
             >
               <Mail size={18} />
-              hello@oyrial.com
+              oyriall@gmail.com
             </a>
             <a
               href="https://instagram.com/oyrial"
