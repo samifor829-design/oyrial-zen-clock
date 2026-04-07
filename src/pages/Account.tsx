@@ -35,12 +35,17 @@ const Account = () => {
             <h1 className="font-serif text-3xl md:text-4xl text-oyrial-charcoal">
               Hello, {user.name.split(" ")[0]}
             </h1>
-            <button
-              onClick={logout}
-              className="text-sm text-oyrial-muted hover:text-oyrial-charcoal underline transition-colors"
-            >
-              Logout
-            </button>
+            <div className="flex items-center gap-4">
+              <Link to="/settings" className="text-muted-foreground hover:text-foreground transition-colors">
+                <SettingsIcon size={20} />
+              </Link>
+              <button
+                onClick={logout}
+                className="text-sm text-muted-foreground hover:text-foreground underline transition-colors"
+              >
+                Logout
+              </button>
+            </div>
           </div>
         </FadeUp>
 
