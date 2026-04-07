@@ -89,7 +89,7 @@ const FloatingField = ({ label, required, type = "text", value, onChange, note, 
 
 const Customize = () => {
   const [dialStyle, setDialStyle] = useState("Minimal Clean");
-  const [handColor, setHandColor] = useState("Black");
+  const [engraving, setEngraving] = useState("");
   const [engraving, setEngraving] = useState("");
   const [location, setLocation] = useState("Bedroom");
   const [vision, setVision] = useState("");
