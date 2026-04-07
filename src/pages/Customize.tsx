@@ -110,7 +110,7 @@ const Customize = () => {
     if (Object.keys(newErrors).length > 0) return;
 
     const msg = encodeURIComponent(
-      `Hi Oyrial! Here's my custom clock order:\n\nName: ${fullName}\nEmail: ${email}\nPhone: ${phone || "Not provided"}\nDial Style: ${dialStyle}\nHand Color: ${handColor}\nEngraving: ${engraving || "None"}\nWhere it hangs: ${location}\nVision: ${vision}`
+      `Hi Oyrial! Here's my custom clock order:\n\nName: ${fullName}\nEmail: ${email}\nPhone: ${phone}\nDial Style: ${dialStyle}\nEngraving: ${engraving || "None"}\nWhere it hangs: ${location}\nVision: ${vision}`
     );
     window.open(`https://wa.me/8801609573884?text=${msg}`, "_blank");
   };
@@ -137,11 +137,7 @@ const Customize = () => {
                   {pillOptions("dialStyle", ["Minimal Clean", "No Markers", "Roman Numerals"], dialStyle, setDialStyle)}
                 </div>
 
-                {/* 2. Hand Color */}
-                <div>
-                  <label className="block text-sm text-oyrial-charcoal mb-3 tracking-wide uppercase">Hand Color</label>
-                  {pillOptions("handColor", ["Black", "Gold", "Silver"], handColor, setHandColor)}
-                </div>
+                {/* 2. Engraving */}
 
                 {/* 3. Engraving */}
                 <FloatingField
@@ -200,10 +196,12 @@ const Customize = () => {
                 {/* 8. Phone */}
                 <FloatingField
                   label="Phone Number"
+                  required
                   type="tel"
                   value={phone}
                   onChange={setPhone}
-                  note="Optional — in case we need to reach you quickly."
+                  error={errors.phone}
+                  note="We'll call to confirm your order details."
                 />
 
                 {/* Pricing Card */}
@@ -218,7 +216,7 @@ const Customize = () => {
 
                 {/* Delivery note */}
                 <p className="text-center text-xs italic text-[#888]">
-                  Estimated delivery: 12–18 working days depending on complexity and materials.
+                  Every clock is handcrafted with care. Please allow 15–20 working days for your order to be made, finished, and delivered to you.
                 </p>
 
                 {/* WhatsApp Button */}
