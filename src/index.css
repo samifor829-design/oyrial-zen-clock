@@ -80,30 +80,22 @@
   }
 }
 
-/* Clock — no glow in light mode */
-.clock-epoxy-dark-glow {
+/* Clock — no glow in light-only mode */
+.clock-epoxy-dark-glow,
+.clock-center-glow {
   opacity: 0;
 }
 .clock-marker,
 .clock-hand,
+.clock-second-hand,
 .clock-pivot {
   filter: none;
 }
-
-/* Dark mode glow via system preference */
-@media (prefers-color-scheme: dark) {
-  .clock-epoxy-dark-glow {
-    opacity: 1;
-  }
-  .clock-marker {
-    filter: url(#goldGlow);
-  }
-  .clock-hand {
-    filter: url(#goldGlow);
-  }
-  .clock-pivot {
-    filter: url(#goldGlow);
-  }
+.clock-wood-frame {
+  filter: none;
+}
+.clock-outer-ring {
+  opacity: 0.4;
 }
 
 /* Scroll animation */
