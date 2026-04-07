@@ -20,8 +20,8 @@ const Home = () => {
       <section className="relative min-h-screen flex items-center justify-center bg-oyrial-charcoal overflow-hidden">
         <div className="relative z-10 text-center px-6">
           <FadeUp>
-            <h1 className="font-serif text-5xl md:text-8xl text-oyrial-offwhite tracking-tight">
-              Time Gone Wild
+            <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-oyrial-offwhite uppercase tracking-[0.08em] whitespace-nowrap">
+              TIME GONE WILD
             </h1>
           </FadeUp>
           <FadeUp delay={150}>
