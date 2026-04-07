@@ -17,10 +17,10 @@ const Home = () => {
   return (
     <main>
       {/* HERO */}
-      <section className="relative min-h-screen flex items-center justify-center bg-oyrial-charcoal overflow-hidden pt-24 md:pt-28">
+      <section className="relative min-h-screen flex items-center justify-center bg-oyrial-offwhite overflow-hidden pt-24 md:pt-28">
         <div className="relative z-10 text-center px-6">
           <FadeUp>
-            <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-oyrial-offwhite uppercase tracking-[0.08em]">
+            <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-oyrial-charcoal uppercase tracking-[0.08em]">
               TIME GONE WILD
             </h1>
           </FadeUp>
@@ -30,7 +30,7 @@ const Home = () => {
             </div>
           </FadeUp>
           <FadeUp delay={200}>
-            <p className="mt-2 text-oyrial-muted text-base md:text-lg max-w-md mx-auto">
+            <p className="mt-2 text-[#555555] text-base md:text-lg max-w-md mx-auto">
               Handcrafted wall clocks for the intentional home.
             </p>
           </FadeUp>
@@ -38,13 +38,13 @@ const Home = () => {
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 to="/shop"
-                className="px-8 py-4 border border-oyrial-offwhite text-oyrial-offwhite text-sm tracking-widest uppercase hover:bg-oyrial-offwhite hover:text-oyrial-charcoal transition-colors min-h-[48px] flex items-center"
+                className="px-8 py-4 border border-oyrial-charcoal text-oyrial-charcoal text-sm tracking-widest uppercase hover:bg-oyrial-charcoal hover:text-white transition-colors min-h-[48px] flex items-center"
               >
                 Explore the Collection
               </Link>
               <Link
                 to="/shop"
-                className="px-8 py-4 bg-oyrial-offwhite text-oyrial-charcoal text-sm tracking-widest uppercase hover:bg-oyrial-white transition-colors min-h-[48px] flex items-center"
+                className="px-8 py-4 bg-oyrial-charcoal text-white text-sm tracking-widest uppercase hover:bg-oyrial-black transition-colors min-h-[48px] flex items-center"
               >
                 Order Now
               </Link>
@@ -54,7 +54,7 @@ const Home = () => {
       </section>
 
       {/* FEATURED PRODUCTS */}
-      <section className="bg-oyrial-offwhite py-20 md:py-32">
+      <section className="bg-white py-20 md:py-32">
         <div className="container">
           <FadeUp>
             <h2 className="font-serif text-4xl md:text-5xl text-center text-oyrial-charcoal mb-16">
@@ -74,13 +74,13 @@ const Home = () => {
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                       />
                       {p.isNew && (
-                        <span className="absolute top-4 left-4 bg-oyrial-charcoal text-oyrial-offwhite text-[10px] tracking-widest uppercase px-3 py-1">
+                        <span className="absolute top-4 left-4 bg-oyrial-charcoal text-white text-[10px] tracking-widest uppercase px-3 py-1">
                           New Drop
                         </span>
                       )}
                       {!p.inStock && (
                         <div className="absolute inset-0 bg-oyrial-charcoal/40 flex items-center justify-center">
-                          <span className="text-oyrial-offwhite text-xs tracking-widest uppercase">Out of Stock</span>
+                          <span className="text-white text-xs tracking-widest uppercase">Out of Stock</span>
                         </div>
                       )}
                     </div>
@@ -92,7 +92,7 @@ const Home = () => {
                     }}
                     className="absolute top-4 right-4 z-10 p-1.5 hover:opacity-80 transition-opacity"
                   >
-                    <Heart size={20} className={isInWishlist(p.id) ? "fill-oyrial-offwhite text-oyrial-offwhite" : "text-oyrial-offwhite/70"} />
+                    <Heart size={20} className={isInWishlist(p.id) ? "fill-oyrial-charcoal text-oyrial-charcoal" : "text-oyrial-muted"} />
                   </button>
                   <div className="mt-4 flex justify-between items-start">
                     <div>
@@ -107,7 +107,7 @@ const Home = () => {
                     </div>
                     <Link
                       to={`/product/${p.id}`}
-                      className="px-4 py-2 bg-oyrial-charcoal text-oyrial-offwhite text-[11px] tracking-widest uppercase hover:bg-oyrial-black transition-colors"
+                      className="px-4 py-2 bg-oyrial-charcoal text-white text-[11px] tracking-widest uppercase hover:bg-oyrial-black transition-colors"
                     >
                       View
                     </Link>
@@ -120,10 +120,10 @@ const Home = () => {
       </section>
 
       {/* BRAND STORY */}
-      <section className="bg-oyrial-charcoal py-20 md:py-32">
+      <section className="bg-oyrial-grey py-20 md:py-32">
         <div className="container max-w-3xl text-center">
           <FadeUp>
-            <h2 className="font-serif text-4xl md:text-5xl text-oyrial-offwhite mb-8">
+            <h2 className="font-serif text-4xl md:text-5xl text-oyrial-charcoal mb-8">
               We Don't Just Make Clocks.
             </h2>
           </FadeUp>
@@ -133,20 +133,20 @@ const Home = () => {
             </p>
           </FadeUp>
           <FadeUp delay={300}>
-            <p className="mt-8 font-serif italic text-lg text-oyrial-offwhite/70">
+            <p className="mt-8 font-serif italic text-lg text-oyrial-charcoal/70">
               "A clock should feel like it belongs — not just hang."
             </p>
           </FadeUp>
           <FadeUp delay={450}>
             <div className="mt-12 grid grid-cols-2 gap-6">
-              <div className="bg-oyrial-offwhite/5 rounded-lg p-6 flex flex-col items-center gap-3">
-                <Volume2 size={28} className="text-oyrial-offwhite/60" />
-                <h3 className="font-serif text-xl text-oyrial-offwhite">Silent Movement</h3>
+              <div className="bg-white rounded-lg p-6 flex flex-col items-center gap-3 shadow-sm">
+                <Volume2 size={28} className="text-oyrial-charcoal/60" />
+                <h3 className="font-serif text-xl text-oyrial-charcoal">Silent Movement</h3>
                 <p className="text-sm text-oyrial-muted">No tick. Just presence.</p>
               </div>
-              <div className="bg-oyrial-offwhite/5 rounded-lg p-6 flex flex-col items-center gap-3">
-                <Paintbrush size={28} className="text-oyrial-offwhite/60" />
-                <h3 className="font-serif text-xl text-oyrial-offwhite">Handcrafted Finish</h3>
+              <div className="bg-white rounded-lg p-6 flex flex-col items-center gap-3 shadow-sm">
+                <Paintbrush size={28} className="text-oyrial-charcoal/60" />
+                <h3 className="font-serif text-xl text-oyrial-charcoal">Handcrafted Finish</h3>
                 <p className="text-sm text-oyrial-muted">Every detail, intentional.</p>
               </div>
             </div>
@@ -155,10 +155,10 @@ const Home = () => {
       </section>
 
       {/* CUSTOMIZATION TEASER */}
-      <section className="bg-oyrial-black py-20 md:py-32">
+      <section className="bg-oyrial-offwhite py-20 md:py-32">
         <div className="container max-w-2xl text-center">
           <FadeUp>
-            <h2 className="font-serif text-3xl md:text-5xl text-oyrial-offwhite mb-4">
+            <h2 className="font-serif text-3xl md:text-5xl text-oyrial-charcoal mb-4">
               Make It Yours.
             </h2>
           </FadeUp>
@@ -171,7 +171,7 @@ const Home = () => {
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 to="/customize"
-                className="px-8 py-4 border border-oyrial-offwhite text-oyrial-offwhite text-sm tracking-widest uppercase hover:bg-oyrial-offwhite hover:text-oyrial-black transition-colors min-h-[48px] flex items-center"
+                className="px-8 py-4 border border-oyrial-charcoal text-oyrial-charcoal text-sm tracking-widest uppercase hover:bg-oyrial-charcoal hover:text-white transition-colors min-h-[48px] flex items-center"
               >
                 Design Your Clock →
               </Link>
@@ -190,7 +190,7 @@ const Home = () => {
       </section>
 
       {/* INSTAGRAM TEASER */}
-      <section className="bg-oyrial-offwhite py-20 md:py-32">
+      <section className="bg-white py-20 md:py-32">
         <div className="container">
           <FadeUp>
             <h2 className="font-serif text-3xl md:text-4xl text-center text-oyrial-charcoal mb-12">
@@ -223,7 +223,7 @@ const Home = () => {
                 href="https://instagram.com/oyrial"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center px-8 py-4 border border-oyrial-charcoal text-oyrial-charcoal text-sm tracking-widest uppercase hover:bg-oyrial-charcoal hover:text-oyrial-offwhite transition-colors min-h-[48px]"
+                className="inline-flex items-center px-8 py-4 border border-oyrial-charcoal text-oyrial-charcoal text-sm tracking-widest uppercase hover:bg-oyrial-charcoal hover:text-white transition-colors min-h-[48px]"
               >
                 Follow on Instagram
               </a>
