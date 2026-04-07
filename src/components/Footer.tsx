@@ -19,7 +19,7 @@ const Footer = () => (
             Instagram
           </a>
           <a
-            href="https://wa.me/8801XXXXXXXXX"
+            href="https://wa.me/8801609573884"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-oyrial-offwhite transition-colors flex items-center gap-1.5"
@@ -27,8 +27,8 @@ const Footer = () => (
             <MessageCircle size={16} />
             WhatsApp
           </a>
-          <a href="mailto:hello@oyrial.com" className="hover:text-oyrial-offwhite transition-colors">
-            hello@oyrial.com
+          <a href="mailto:oyriall@gmail.com" className="hover:text-oyrial-offwhite transition-colors">
+            oyriall@gmail.com
           </a>
         </div>
       </div>
