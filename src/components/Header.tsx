@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import oyrialLogo from "@/assets/oyrial-logo.png";
+import oyrialLogoWhite from "@/assets/oyrial-logo.png";
+import oyrialLogoDark from "@/assets/oyrial-logo-dark.png";
 import { ShoppingBag, Menu, X, Heart, User, Search, Moon, Sun } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
