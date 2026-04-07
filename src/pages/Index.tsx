@@ -5,7 +5,7 @@ import { Volume2, Paintbrush, MessageCircle, Heart } from "lucide-react";
 import { useWishlist } from "@/context/WishlistContext";
 import { toast } from "sonner";
 import HeroClock from "@/components/HeroClock";
-import oyrialLogo from "@/assets/oyrial-logo.png";
+
 import insta1 from "@/assets/insta-clock-1.jpg";
 import insta2 from "@/assets/insta-clock-2.jpg";
 import insta3 from "@/assets/insta-clock-3.jpg";
