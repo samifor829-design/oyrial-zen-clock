@@ -1,18 +1,22 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import oyrialLogo from "@/assets/oyrial-logo.png";
-import { ShoppingBag, Menu, X, Heart, User } from "lucide-react";
+import { ShoppingBag, Menu, X, Heart, User, Search, Moon, Sun } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { useAuth } from "@/context/AuthContext";
+import { useTheme } from "@/context/ThemeContext";
 import AuthModal from "@/components/AuthModal";
+import SearchBar from "@/components/SearchBar";
 
 const Header = () => {
   const [open, setOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const { items } = useCart();
   const { items: wishlistItems } = useWishlist();
   const { user } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const location = useLocation();
   const count = items.reduce((a, b) => a + b.quantity, 0);
   const wishCount = wishlistItems.length;
@@ -24,20 +28,20 @@ const Header = () => {
     { to: "/contact", label: "Contact" },
   ];
 
-  const isDark = location.pathname === "/" || location.pathname === "/contact";
+  const isDark = theme === "dark" && (location.pathname === "/" || location.pathname === "/contact");
 
-  const iconColor = isDark ? "text-oyrial-offwhite" : "text-oyrial-charcoal";
+  const iconColor = isDark ? "text-oyrial-offwhite" : "text-foreground";
 
   return (
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
-          isDark ? "bg-oyrial-charcoal/90 backdrop-blur-sm" : "bg-oyrial-white/90 backdrop-blur-sm"
+          isDark ? "bg-oyrial-charcoal/90 backdrop-blur-sm" : "bg-background/90 backdrop-blur-sm"
         }`}
       >
         <div className="container flex items-center justify-between h-16 md:h-20">
-          <Link to="/" className={`flex items-center gap-2 font-serif text-2xl md:text-3xl tracking-wider ${isDark ? "text-oyrial-offwhite" : "text-oyrial-charcoal"}`}>
-            <img src={oyrialLogo} alt="Oyrial logo" className={`h-7 md:h-8 w-auto ${isDark ? "" : "invert"}`} />
+          <Link to="/" className={`flex items-center gap-2 font-serif text-2xl md:text-3xl tracking-wider ${isDark ? "text-oyrial-offwhite" : "text-foreground"}`}>
+            <img src={oyrialLogo} alt="Oyrial logo" className={`h-7 md:h-8 w-auto ${isDark ? "" : "dark:invert-0 invert"}`} />
             Oyrial
           </Link>
 
@@ -48,12 +52,20 @@ const Header = () => {
                 key={l.to}
                 to={l.to}
                 className={`text-sm tracking-widest uppercase transition-opacity hover:opacity-60 ${
-                  isDark ? "text-oyrial-offwhite" : "text-oyrial-charcoal"
+                  isDark ? "text-oyrial-offwhite" : "text-foreground"
                 }`}
               >
                 {l.label}
               </Link>
             ))}
+            {/* Search */}
+            <button onClick={() => setSearchOpen(!searchOpen)} className={iconColor}>
+              <Search size={20} />
+            </button>
+            {/* Theme toggle */}
+            <button onClick={toggleTheme} className={iconColor}>
+              {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
             {/* Account */}
             {user ? (
               <Link to="/account" className={`${iconColor} text-sm tracking-widest uppercase hover:opacity-60 transition-opacity`}>
@@ -68,7 +80,7 @@ const Header = () => {
             <Link to="/wishlist" className={`relative ${iconColor}`}>
               <Heart size={20} />
               {wishCount > 0 && (
-                <span className="absolute -top-2 -right-2 w-4 h-4 text-[10px] flex items-center justify-center bg-oyrial-charcoal text-oyrial-offwhite rounded-full">
+                <span className="absolute -top-2 -right-2 w-4 h-4 text-[10px] flex items-center justify-center bg-primary text-primary-foreground rounded-full">
                   {wishCount}
                 </span>
               )}
@@ -77,7 +89,7 @@ const Header = () => {
             <Link to="/cart" className={`relative ${iconColor}`}>
               <ShoppingBag size={20} />
               {count > 0 && (
-                <span className="absolute -top-2 -right-2 w-4 h-4 text-[10px] flex items-center justify-center bg-oyrial-charcoal text-oyrial-offwhite rounded-full">
+                <span className="absolute -top-2 -right-2 w-4 h-4 text-[10px] flex items-center justify-center bg-primary text-primary-foreground rounded-full">
                   {count}
                 </span>
               )}
@@ -86,6 +98,12 @@ const Header = () => {
 
           {/* Mobile */}
           <div className="flex items-center gap-4 md:hidden">
+            <button onClick={() => setSearchOpen(!searchOpen)} className={iconColor}>
+              <Search size={20} />
+            </button>
+            <button onClick={toggleTheme} className={iconColor}>
+              {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
             {user ? (
               <Link to="/account" className={iconColor}>
                 <User size={20} fill="currentColor" />
@@ -98,7 +116,7 @@ const Header = () => {
             <Link to="/wishlist" className={`relative ${iconColor}`}>
               <Heart size={20} />
               {wishCount > 0 && (
-                <span className="absolute -top-2 -right-2 w-4 h-4 text-[10px] flex items-center justify-center bg-oyrial-charcoal text-oyrial-offwhite rounded-full">
+                <span className="absolute -top-2 -right-2 w-4 h-4 text-[10px] flex items-center justify-center bg-primary text-primary-foreground rounded-full">
                   {wishCount}
                 </span>
               )}
@@ -106,7 +124,7 @@ const Header = () => {
             <Link to="/cart" className={`relative ${iconColor}`}>
               <ShoppingBag size={20} />
               {count > 0 && (
-                <span className="absolute -top-2 -right-2 w-4 h-4 text-[10px] flex items-center justify-center bg-oyrial-charcoal text-oyrial-offwhite rounded-full">
+                <span className="absolute -top-2 -right-2 w-4 h-4 text-[10px] flex items-center justify-center bg-primary text-primary-foreground rounded-full">
                   {count}
                 </span>
               )}
@@ -119,14 +137,14 @@ const Header = () => {
 
         {/* Mobile menu */}
         {open && (
-          <div className={`md:hidden pb-6 ${isDark ? "bg-oyrial-charcoal" : "bg-oyrial-white"}`}>
+          <div className={`md:hidden pb-6 ${isDark ? "bg-oyrial-charcoal" : "bg-background"}`}>
             {links.map((l) => (
               <Link
                 key={l.to}
                 to={l.to}
                 onClick={() => setOpen(false)}
                 className={`block px-6 py-3 text-sm tracking-widest uppercase ${
-                  isDark ? "text-oyrial-offwhite" : "text-oyrial-charcoal"
+                  isDark ? "text-oyrial-offwhite" : "text-foreground"
                 }`}
               >
                 {l.label}
@@ -135,6 +153,7 @@ const Header = () => {
           </div>
         )}
       </header>
+      <SearchBar open={searchOpen} onClose={() => setSearchOpen(false)} />
       <AuthModal open={authOpen} onOpenChange={setAuthOpen} />
     </>
   );
