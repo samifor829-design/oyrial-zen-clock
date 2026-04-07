@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import oyrialLogoWhite from "@/assets/oyrial-logo.png";
+import oyrialLogoWhite from "@/assets/oyrial-logo-white.png";
 import oyrialLogoDark from "@/assets/oyrial-logo-dark.png";
 import { ShoppingBag, Menu, X, Heart, User, Search, Moon, Sun } from "lucide-react";
 import { useCart } from "@/context/CartContext";
@@ -41,8 +41,8 @@ const Header = () => {
         }`}
       >
         <div className="container flex items-center justify-between h-16 md:h-20">
-          <Link to="/" className="flex items-center pl-5 md:pl-7 hover:opacity-80 hover:scale-105 transition-all duration-200 ease-out">
-            <img src={theme === "dark" ? oyrialLogoWhite : oyrialLogoDark} alt="Oyrial logo" className="h-9 md:h-12 w-auto" />
+          <Link to="/" className="flex items-center pl-5 md:pl-7 hover:scale-105 transition-transform duration-200 ease-out">
+            <img src={theme === "dark" ? oyrialLogoWhite : oyrialLogoDark} alt="Oyrial logo" className="block w-auto object-contain flex-shrink-0 h-[34px] md:h-[44px]" />
           </Link>
 
           {/* Desktop nav */}
