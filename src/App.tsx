@@ -38,6 +38,7 @@ const App = () => (
             <CartProvider>
               <Sonner />
               <BrowserRouter>
+                <AppContent />
                 <Header />
                 <Routes>
                   <Route path="/" element={<Index />} />
