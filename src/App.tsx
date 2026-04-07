@@ -20,8 +20,14 @@ import Wishlist from "./pages/Wishlist";
 import Account from "./pages/Account";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
+import { useLiquidDepth } from "./hooks/useLiquidDepth";
 
 const queryClient = new QueryClient();
+
+const AppContent = () => {
+  useLiquidDepth();
+  return null;
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
