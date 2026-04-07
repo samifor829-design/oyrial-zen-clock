@@ -32,7 +32,7 @@ const Header = () => {
     <>
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm transition-colors duration-300">
         <div className="container flex items-center justify-between h-16 md:h-20">
-          <Link to="/" className="flex items-center pl-5 md:pl-7 hover:scale-105 transition-transform duration-200 ease-out">
+          <Link to="/" className="flex items-center pl-4 hover:scale-105 transition-transform duration-200 ease-out">
             <img src={oyrialLogoDark} alt="Oyrial logo" className="block w-auto object-contain flex-shrink-0 h-[34px] md:h-[44px]" />
           </Link>
 
