@@ -20,11 +20,11 @@ const About = () => (
     </section>
 
     {/* Story */}
-    <section className="bg-oyrial-charcoal py-20 md:py-32">
+    <section className="bg-white py-20 md:py-32">
       <div className="container max-w-4xl">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <FadeUp>
-            <h2 className="font-serif text-3xl md:text-4xl text-oyrial-offwhite mb-6">
+            <h2 className="font-serif text-3xl md:text-4xl text-oyrial-charcoal mb-6">
               Why Oyrial Exists
             </h2>
             <p className="text-oyrial-muted leading-relaxed">

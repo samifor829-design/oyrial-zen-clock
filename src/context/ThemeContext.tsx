@@ -1,9 +1,7 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-
-type Theme = "dark" | "light";
+import { createContext, useContext, ReactNode } from "react";
 
 interface ThemeContextType {
-  theme: Theme;
+  theme: "light";
   toggleTheme: () => void;
 }
 
@@ -15,31 +13,12 @@ export const useTheme = () => {
   return ctx;
 };
 
-const THEME_KEY = "oyrial-theme";
-
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const [theme, setTheme] = useState<Theme>(() => {
-    try {
-      return (localStorage.getItem(THEME_KEY) as Theme) || "dark";
-    } catch {
-      return "dark";
-    }
-  });
-
-  useEffect(() => {
-    localStorage.setItem(THEME_KEY, theme);
-    const root = document.documentElement;
-    if (theme === "dark") {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
-  }, [theme]);
-
-  const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
+  // Always light mode — toggle is a no-op kept for API compatibility
+  const toggleTheme = () => {};
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme: "light", toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   );

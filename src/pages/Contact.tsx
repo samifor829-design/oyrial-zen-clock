@@ -13,10 +13,10 @@ const Contact = () => {
   };
 
   return (
-    <main className="bg-oyrial-charcoal pt-24 pb-20 min-h-screen">
+    <main className="bg-oyrial-offwhite pt-24 pb-20 min-h-screen">
       <div className="container max-w-2xl">
         <FadeUp>
-          <h1 className="font-serif text-4xl md:text-6xl text-oyrial-offwhite">Let's Talk.</h1>
+          <h1 className="font-serif text-4xl md:text-6xl text-oyrial-charcoal">Let's Talk.</h1>
           <p className="mt-3 text-oyrial-muted">
             Whether it's a question, a custom order, or just a hello — we're here.
           </p>
@@ -29,14 +29,14 @@ const Contact = () => {
               href="https://wa.me/8801XXXXXXXXX?text=Hi%20Oyrial!"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 bg-[#25D366] text-oyrial-white px-5 py-4 text-sm min-h-[48px]"
+              className="flex items-center gap-3 bg-[#25D366] text-white px-5 py-4 text-sm min-h-[48px]"
             >
               <MessageCircle size={18} />
               Chat with us
             </a>
             <a
               href="mailto:hello@oyrial.com"
-              className="flex items-center gap-3 border border-oyrial-muted/30 text-oyrial-offwhite px-5 py-4 text-sm hover:bg-oyrial-offwhite/5 transition-colors min-h-[48px]"
+              className="flex items-center gap-3 border border-oyrial-charcoal/20 text-oyrial-charcoal px-5 py-4 text-sm hover:bg-oyrial-charcoal/5 transition-colors min-h-[48px]"
             >
               <Mail size={18} />
               hello@oyrial.com
@@ -45,7 +45,7 @@ const Contact = () => {
               href="https://instagram.com/oyrial"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 border border-oyrial-muted/30 text-oyrial-offwhite px-5 py-4 text-sm hover:bg-oyrial-offwhite/5 transition-colors min-h-[48px]"
+              className="flex items-center gap-3 border border-oyrial-charcoal/20 text-oyrial-charcoal px-5 py-4 text-sm hover:bg-oyrial-charcoal/5 transition-colors min-h-[48px]"
             >
               <Instagram size={18} />
               @oyrial
@@ -60,18 +60,18 @@ const Contact = () => {
               type="text"
               placeholder="Your name"
               required
-              className="w-full bg-transparent border border-oyrial-muted/30 px-4 py-3 text-sm text-oyrial-offwhite placeholder:text-oyrial-muted focus:outline-none focus:border-oyrial-offwhite min-h-[48px]"
+              className="w-full bg-white border border-oyrial-charcoal/20 px-4 py-3 text-sm text-oyrial-charcoal placeholder:text-oyrial-muted focus:outline-none focus:border-oyrial-charcoal min-h-[48px]"
             />
             <textarea
               placeholder="Your message"
               rows={5}
               required
-              className="w-full bg-transparent border border-oyrial-muted/30 px-4 py-3 text-sm text-oyrial-offwhite placeholder:text-oyrial-muted focus:outline-none focus:border-oyrial-offwhite resize-none"
+              className="w-full bg-white border border-oyrial-charcoal/20 px-4 py-3 text-sm text-oyrial-charcoal placeholder:text-oyrial-muted focus:outline-none focus:border-oyrial-charcoal resize-none"
             />
             <button
               type="submit"
               disabled={sent}
-              className="w-full bg-oyrial-offwhite text-oyrial-charcoal text-sm tracking-widest uppercase py-4 hover:bg-oyrial-white transition-colors min-h-[48px] disabled:opacity-50"
+              className="w-full bg-oyrial-charcoal text-white text-sm tracking-widest uppercase py-4 hover:bg-oyrial-black transition-colors min-h-[48px] disabled:opacity-50"
             >
               {sent ? "Sent ✓" : "Send"}
             </button>

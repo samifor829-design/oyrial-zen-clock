@@ -1,15 +1,13 @@
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
-import { useTheme } from "@/context/ThemeContext";
 import { Input } from "@/components/ui/input";
-import { Moon, Sun, Bell, Globe, Lock, Trash2 } from "lucide-react";
+import { Bell, Globe, Lock, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import FadeUp from "@/components/FadeUp";
 
 const Settings = () => {
   const { user, logout } = useAuth();
-  const { theme, toggleTheme } = useTheme();
   const [notifications, setNotifications] = useState(true);
   const [language, setLanguage] = useState("en");
   const [passwords, setPasswords] = useState({ current: "", new: "", confirm: "" });
@@ -44,27 +42,8 @@ const Settings = () => {
         </FadeUp>
 
         <div className="space-y-8">
-          {/* Theme */}
-          <FadeUp delay={50}>
-            <div className="flex items-center justify-between py-4 border-b border-border">
-              <div className="flex items-center gap-3">
-                {theme === "dark" ? <Moon size={18} className="text-muted-foreground" /> : <Sun size={18} className="text-muted-foreground" />}
-                <div>
-                  <p className="text-sm text-foreground font-sans">Appearance</p>
-                  <p className="text-xs text-muted-foreground">{theme === "dark" ? "Dark Mode" : "Light Mode"}</p>
-                </div>
-              </div>
-              <button
-                onClick={toggleTheme}
-                className="relative w-12 h-6 rounded-full bg-muted transition-colors"
-              >
-                <span className={`absolute top-0.5 w-5 h-5 rounded-full bg-foreground transition-transform ${theme === "dark" ? "left-6" : "left-0.5"}`} />
-              </button>
-            </div>
-          </FadeUp>
-
           {/* Notifications */}
-          <FadeUp delay={100}>
+          <FadeUp delay={50}>
             <div className="flex items-center justify-between py-4 border-b border-border">
               <div className="flex items-center gap-3">
                 <Bell size={18} className="text-muted-foreground" />
@@ -86,7 +65,7 @@ const Settings = () => {
           </FadeUp>
 
           {/* Language */}
-          <FadeUp delay={150}>
+          <FadeUp delay={100}>
             <div className="flex items-center justify-between py-4 border-b border-border">
               <div className="flex items-center gap-3">
                 <Globe size={18} className="text-muted-foreground" />
@@ -110,38 +89,17 @@ const Settings = () => {
           </FadeUp>
 
           {/* Change Password */}
-          <FadeUp delay={200}>
+          <FadeUp delay={150}>
             <div className="py-4 border-b border-border">
               <div className="flex items-center gap-3 mb-4">
                 <Lock size={18} className="text-muted-foreground" />
                 <p className="text-sm text-foreground font-sans">Change Password</p>
               </div>
               <form onSubmit={handleChangePassword} className="space-y-3 max-w-sm">
-                <Input
-                  type="password"
-                  placeholder="Current password"
-                  value={passwords.current}
-                  onChange={(e) => setPasswords({ ...passwords, current: e.target.value })}
-                  className="border-border bg-transparent text-foreground"
-                />
-                <Input
-                  type="password"
-                  placeholder="New password"
-                  value={passwords.new}
-                  onChange={(e) => setPasswords({ ...passwords, new: e.target.value })}
-                  className="border-border bg-transparent text-foreground"
-                />
-                <Input
-                  type="password"
-                  placeholder="Confirm new password"
-                  value={passwords.confirm}
-                  onChange={(e) => setPasswords({ ...passwords, confirm: e.target.value })}
-                  className="border-border bg-transparent text-foreground"
-                />
-                <button
-                  type="submit"
-                  className="px-6 py-3 bg-primary text-primary-foreground text-sm tracking-widest uppercase hover:opacity-90 transition-opacity min-h-[48px] font-sans"
-                >
+                <Input type="password" placeholder="Current password" value={passwords.current} onChange={(e) => setPasswords({ ...passwords, current: e.target.value })} className="border-border bg-transparent text-foreground" />
+                <Input type="password" placeholder="New password" value={passwords.new} onChange={(e) => setPasswords({ ...passwords, new: e.target.value })} className="border-border bg-transparent text-foreground" />
+                <Input type="password" placeholder="Confirm new password" value={passwords.confirm} onChange={(e) => setPasswords({ ...passwords, confirm: e.target.value })} className="border-border bg-transparent text-foreground" />
+                <button type="submit" className="px-6 py-3 bg-primary text-primary-foreground text-sm tracking-widest uppercase hover:opacity-90 transition-opacity min-h-[48px] font-sans">
                   Update Password
                 </button>
               </form>
@@ -149,37 +107,22 @@ const Settings = () => {
           </FadeUp>
 
           {/* Delete Account */}
-          <FadeUp delay={250}>
+          <FadeUp delay={200}>
             <div className="py-4">
               <div className="flex items-center gap-3 mb-3">
                 <Trash2 size={18} className="text-destructive" />
                 <p className="text-sm text-destructive font-sans">Delete Account</p>
               </div>
               {!deleteConfirm ? (
-                <button
-                  onClick={() => setDeleteConfirm(true)}
-                  className="px-6 py-3 bg-destructive text-destructive-foreground text-sm tracking-widest uppercase min-h-[48px] hover:opacity-90 transition-opacity font-sans"
-                >
+                <button onClick={() => setDeleteConfirm(true)} className="px-6 py-3 bg-destructive text-destructive-foreground text-sm tracking-widest uppercase min-h-[48px] hover:opacity-90 transition-opacity font-sans">
                   Delete My Account
                 </button>
               ) : (
                 <div className="space-y-3">
-                  <p className="text-sm text-destructive font-sans">
-                    This action is permanent and cannot be undone. All your data will be lost.
-                  </p>
+                  <p className="text-sm text-destructive font-sans">This action is permanent and cannot be undone. All your data will be lost.</p>
                   <div className="flex gap-3">
-                    <button
-                      onClick={handleDeleteAccount}
-                      className="px-6 py-3 bg-destructive text-destructive-foreground text-sm tracking-widest uppercase min-h-[48px] font-sans"
-                    >
-                      Confirm Delete
-                    </button>
-                    <button
-                      onClick={() => setDeleteConfirm(false)}
-                      className="px-6 py-3 bg-muted text-foreground text-sm tracking-widest uppercase min-h-[48px] font-sans"
-                    >
-                      Cancel
-                    </button>
+                    <button onClick={handleDeleteAccount} className="px-6 py-3 bg-destructive text-destructive-foreground text-sm tracking-widest uppercase min-h-[48px] font-sans">Confirm Delete</button>
+                    <button onClick={() => setDeleteConfirm(false)} className="px-6 py-3 bg-muted text-foreground text-sm tracking-widest uppercase min-h-[48px] font-sans">Cancel</button>
                   </div>
                 </div>
               )}

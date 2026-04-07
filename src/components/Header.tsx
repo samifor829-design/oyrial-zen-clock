@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import oyrialLogoWhite from "@/assets/oyrial-logo-white.png";
 import oyrialLogoDark from "@/assets/oyrial-logo-dark.png";
-import { ShoppingBag, Menu, X, Heart, User, Search, Moon, Sun } from "lucide-react";
+import { ShoppingBag, Menu, X, Heart, User, Search } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { useAuth } from "@/context/AuthContext";
-import { useTheme } from "@/context/ThemeContext";
 import AuthModal from "@/components/AuthModal";
 import SearchBar from "@/components/SearchBar";
 
@@ -17,7 +15,6 @@ const Header = () => {
   const { items } = useCart();
   const { items: wishlistItems } = useWishlist();
   const { user } = useAuth();
-  const { theme, toggleTheme } = useTheme();
   const location = useLocation();
   const count = items.reduce((a, b) => a + b.quantity, 0);
   const wishCount = wishlistItems.length;
@@ -29,20 +26,14 @@ const Header = () => {
     { to: "/contact", label: "Contact" },
   ];
 
-  const isDark = theme === "dark" && (location.pathname === "/" || location.pathname === "/contact");
-
-  const iconColor = isDark ? "text-oyrial-offwhite" : "text-foreground";
+  const iconColor = "text-foreground";
 
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
-          isDark ? "bg-oyrial-charcoal/90 backdrop-blur-sm" : "bg-background/90 backdrop-blur-sm"
-        }`}
-      >
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm transition-colors duration-300">
         <div className="container flex items-center justify-between h-16 md:h-20">
           <Link to="/" className="flex items-center pl-5 md:pl-7 hover:scale-105 transition-transform duration-200 ease-out">
-            <img src={theme === "dark" ? oyrialLogoWhite : oyrialLogoDark} alt="Oyrial logo" className="block w-auto object-contain flex-shrink-0 h-[34px] md:h-[44px]" />
+            <img src={oyrialLogoDark} alt="Oyrial logo" className="block w-auto object-contain flex-shrink-0 h-[34px] md:h-[44px]" />
           </Link>
 
           {/* Desktop nav */}
@@ -51,9 +42,7 @@ const Header = () => {
               <Link
                 key={l.to}
                 to={l.to}
-                className={`text-sm tracking-widest uppercase transition-opacity hover:opacity-60 ${
-                  isDark ? "text-oyrial-offwhite" : "text-foreground"
-                }`}
+                className="text-sm tracking-widest uppercase transition-opacity hover:opacity-60 text-foreground"
               >
                 {l.label}
               </Link>
@@ -61,10 +50,6 @@ const Header = () => {
             {/* Search */}
             <button onClick={() => setSearchOpen(!searchOpen)} className={iconColor}>
               <Search size={20} />
-            </button>
-            {/* Theme toggle */}
-            <button onClick={toggleTheme} className={iconColor}>
-              {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
             </button>
             {/* Account */}
             {user ? (
@@ -101,9 +86,6 @@ const Header = () => {
             <button onClick={() => setSearchOpen(!searchOpen)} className={iconColor}>
               <Search size={20} />
             </button>
-            <button onClick={toggleTheme} className={iconColor}>
-              {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-            </button>
             {user ? (
               <Link to="/account" className={iconColor}>
                 <User size={20} fill="currentColor" />
@@ -137,15 +119,13 @@ const Header = () => {
 
         {/* Mobile menu */}
         {open && (
-          <div className={`md:hidden pb-6 ${isDark ? "bg-oyrial-charcoal" : "bg-background"}`}>
+          <div className="md:hidden pb-6 bg-white">
             {links.map((l) => (
               <Link
                 key={l.to}
                 to={l.to}
                 onClick={() => setOpen(false)}
-                className={`block px-6 py-3 text-sm tracking-widest uppercase ${
-                  isDark ? "text-oyrial-offwhite" : "text-foreground"
-                }`}
+                className="block px-6 py-3 text-sm tracking-widest uppercase text-foreground"
               >
                 {l.label}
               </Link>
