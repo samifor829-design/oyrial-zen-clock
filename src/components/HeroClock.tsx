@@ -149,6 +149,19 @@ const HeroClock = () => {
           </filter>
         </defs>
 
+        {/* Brass hour markers */}
+        {markers.map((m, i) => (
+          <line
+            key={i}
+            x1={m.x1} y1={m.y1}
+            x2={m.x2} y2={m.y2}
+            stroke="#C9A84C"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            filter="url(#thinShadow)"
+          />
+        ))}
+
         {/* Hour hand */}
         <g transform={`rotate(${angles.h} ${C} ${C})`} filter="url(#handShadow)">
           <path d={HOUR_PATH} fill="url(#walnut)" />
