@@ -4,9 +4,7 @@ import clockFace from "@/assets/clock-face-epoxy.png";
 const SIZE = 460;
 const C = SIZE / 2; // center
 
-// ── Properly proportioned hands ──
-
-// Hour hand: short & thick (reaches ~60% to markers)
+// Hour hand: short & thick
 const HOUR_PATH = `
   M ${C - 5} ${C + 10}
   L ${C - 5} ${C - 85}
@@ -18,7 +16,7 @@ const HOUR_PATH = `
   Z
 `;
 
-// Minute hand: longer & thinner (reaches ~80% to markers)
+// Minute hand: longer & thinner
 const MINUTE_PATH = `
   M ${C - 3.5} ${C + 12}
   L ${C - 3.5} ${C - 140}
@@ -30,7 +28,7 @@ const MINUTE_PATH = `
   Z
 `;
 
-// Second hand: very thin & long — clearly distinct
+// Second hand: very thin & long
 const SECOND_PATH = `
   M ${C - 0.5} ${C + 28}
   L ${C - 0.5} ${C - 165}
@@ -39,19 +37,6 @@ const SECOND_PATH = `
   L ${C + 0.5} ${C + 28}
   Z
 `;
-
-// Thin brass hour markers (12 positions) — like reference image
-const MARKER_R_OUTER = 210; // outer edge radius
-const MARKER_R_INNER = 185; // inner edge radius (length ~25px)
-const markers = Array.from({ length: 12 }, (_, i) => {
-  const angleDeg = i * 30 - 90;
-  const angleRad = angleDeg * (Math.PI / 180);
-  const x1 = C + MARKER_R_INNER * Math.cos(angleRad);
-  const y1 = C + MARKER_R_INNER * Math.sin(angleRad);
-  const x2 = C + MARKER_R_OUTER * Math.cos(angleRad);
-  const y2 = C + MARKER_R_OUTER * Math.sin(angleRad);
-  return { x1, y1, x2, y2 };
-});
 
 const HeroClock = () => {
   const rafRef = useRef<number>(0);
@@ -73,7 +58,7 @@ const HeroClock = () => {
 
   return (
     <div className="relative mx-auto h-[420px] w-[420px] sm:h-[550px] sm:w-[550px] md:h-[690px] md:w-[690px]">
-      {/* Clock face image — no white circle border */}
+      {/* Clock face image */}
       <img
         src={clockFace}
         alt="Premium epoxy resin and wood wall clock"
@@ -104,7 +89,6 @@ const HeroClock = () => {
         style={{ pointerEvents: "none" }}
       >
         <defs>
-          {/* Walnut wood */}
           <linearGradient id="walnut" x1="0" y1="0" x2="0.3" y2="1">
             <stop offset="0%" stopColor="#7A4F30" />
             <stop offset="25%" stopColor="#5C3A1E" />
@@ -132,27 +116,18 @@ const HeroClock = () => {
             <line x1="3" y1="0" x2="3" y2="80" stroke="#6F4528" strokeWidth="0.2" strokeOpacity="0.1" />
           </pattern>
 
-          <linearGradient id="markerWood" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#8B6340" />
-            <stop offset="50%" stopColor="#5C3A1E" />
-            <stop offset="100%" stopColor="#4A2E16" />
-          </linearGradient>
-
-          {/* Second hand: dark slim metal look */}
           <linearGradient id="secondFill" x1="0" y1="0" x2="1" y2="0">
             <stop offset="0%" stopColor="#2A1A0E" />
             <stop offset="50%" stopColor="#1E1208" />
             <stop offset="100%" stopColor="#2A1A0E" />
           </linearGradient>
 
-          {/* Brass center */}
           <radialGradient id="brass" cx="40%" cy="35%">
             <stop offset="0%" stopColor="#D4AF37" />
             <stop offset="50%" stopColor="#B8952C" />
             <stop offset="100%" stopColor="#8B7020" />
           </radialGradient>
 
-          {/* Subtle shadows */}
           <filter id="handShadow" x="-10%" y="-5%" width="120%" height="115%">
             <feDropShadow dx="0.5" dy="1.5" stdDeviation="1.2" floodColor="rgba(30,18,8,0.25)" />
           </filter>
@@ -161,10 +136,7 @@ const HeroClock = () => {
           </filter>
         </defs>
 
-
-
-
-        {/* ── Hour hand ── */}
+        {/* Hour hand */}
         <g transform={`rotate(${angles.h} ${C} ${C})`} filter="url(#handShadow)">
           <path d={HOUR_PATH} fill="url(#walnut)" />
           <path d={HOUR_PATH} fill="url(#walnutEdge)" />
@@ -173,7 +145,7 @@ const HeroClock = () => {
           <path d={HOUR_PATH} fill="none" stroke="#3D2410" strokeWidth="0.4" strokeOpacity="0.3" />
         </g>
 
-        {/* ── Minute hand ── */}
+        {/* Minute hand */}
         <g transform={`rotate(${angles.m} ${C} ${C})`} filter="url(#handShadow)">
           <path d={MINUTE_PATH} fill="url(#walnut)" />
           <path d={MINUTE_PATH} fill="url(#walnutEdge)" />
@@ -182,12 +154,12 @@ const HeroClock = () => {
           <path d={MINUTE_PATH} fill="none" stroke="#3D2410" strokeWidth="0.35" strokeOpacity="0.3" />
         </g>
 
-        {/* ── Second hand ── very thin, distinct from minute */}
+        {/* Second hand */}
         <g transform={`rotate(${angles.s} ${C} ${C})`} filter="url(#thinShadow)">
           <path d={SECOND_PATH} fill="url(#secondFill)" />
         </g>
 
-        {/* ── Brass center cap ── */}
+        {/* Brass center cap */}
         <circle cx={C} cy={C} r="8" fill="url(#brass)" filter="url(#thinShadow)" />
         <circle cx={C} cy={C} r="4" fill="#A07D28" />
         <circle cx={C} cy={C} r="1.8" fill="#D4AF37" opacity="0.5" />
