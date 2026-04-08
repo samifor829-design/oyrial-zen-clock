@@ -150,16 +150,28 @@ const HeroClock = () => {
           </filter>
         </defs>
 
-        {/* Brass hour markers */}
+        {/* Wooden hour markers at 12, 3, 6, 9 */}
         {markers.map((m, i) => (
           <line
             key={i}
             x1={m.x1} y1={m.y1}
             x2={m.x2} y2={m.y2}
-            stroke="#C9A84C"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            filter="url(#thinShadow)"
+            stroke="#5C3A1E"
+            strokeWidth="6"
+            strokeLinecap="butt"
+            filter="url(#handShadow)"
+          />
+        ))}
+        {/* Wood highlight on markers */}
+        {markers.map((m, i) => (
+          <line
+            key={`h-${i}`}
+            x1={m.x1} y1={m.y1}
+            x2={m.x2} y2={m.y2}
+            stroke="#8B6340"
+            strokeWidth="3"
+            strokeLinecap="butt"
+            opacity="0.6"
           />
         ))}
 
