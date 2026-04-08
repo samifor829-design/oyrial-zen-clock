@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Instagram, MessageCircle } from "lucide-react";
+import { Instagram, Facebook, MessageCircle } from "lucide-react";
 
 const Footer = () => (
   <footer className="bg-oyrial-charcoal text-oyrial-offwhite py-16">
@@ -17,6 +17,15 @@ const Footer = () => (
           >
             <Instagram size={16} />
             Instagram
+          </a>
+          <a
+            href="https://facebook.com/oyrial"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-oyrial-offwhite transition-colors flex items-center gap-1.5"
+          >
+            <Facebook size={16} />
+            Facebook
           </a>
           <a
             href="https://wa.me/8801609573884"

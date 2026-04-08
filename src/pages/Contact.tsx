@@ -1,5 +1,5 @@
 import FadeUp from "@/components/FadeUp";
-import { MessageCircle, Mail, Instagram, ArrowRight } from "lucide-react";
+import { MessageCircle, Mail, Instagram, Facebook, ArrowRight } from "lucide-react";
 
 const contactCards = [
   {
@@ -21,6 +21,13 @@ const contactCards = [
     icon: Instagram,
     label: "@oyrial",
     sub: "Follow our craft, DM us anytime",
+    external: true,
+  },
+  {
+    href: "https://facebook.com/oyrial",
+    icon: Facebook,
+    label: "Oyrial on Facebook",
+    sub: "Like our page, message us anytime",
     external: true,
   },
 ];
