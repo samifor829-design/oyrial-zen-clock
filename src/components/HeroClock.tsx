@@ -4,27 +4,27 @@ import clockFace from "@/assets/clock-face-epoxy.png";
 const SIZE = 460;
 const C = SIZE / 2; // center
 
-// Organic twig-style hour hand — tapers from ~10px base to 1.5px tip with subtle curves
+// Hour hand — thick walnut branch, organic taper
 const HOUR_PATH = `
-  M ${C - 4.5} ${C + 10}
-  C ${C - 5} ${C - 5}, ${C - 5.5} ${C - 30}, ${C - 5} ${C - 55}
-  C ${C - 4.5} ${C - 78}, ${C - 3.5} ${C - 98}, ${C - 2.5} ${C - 115}
-  C ${C - 1.5} ${C - 125}, ${C - 0.8} ${C - 130}, ${C} ${C - 134}
-  C ${C + 0.8} ${C - 130}, ${C + 1.5} ${C - 125}, ${C + 2.5} ${C - 115}
-  C ${C + 3.5} ${C - 98}, ${C + 4.5} ${C - 78}, ${C + 5} ${C - 55}
-  C ${C + 5.5} ${C - 30}, ${C + 5} ${C - 5}, ${C + 4.5} ${C + 10}
+  M ${C - 7} ${C + 12}
+  C ${C - 8} ${C - 5}, ${C - 8} ${C - 30}, ${C - 7.5} ${C - 55}
+  C ${C - 6.5} ${C - 78}, ${C - 5} ${C - 98}, ${C - 3.5} ${C - 115}
+  C ${C - 2} ${C - 125}, ${C - 1} ${C - 130}, ${C} ${C - 134}
+  C ${C + 1} ${C - 130}, ${C + 2} ${C - 125}, ${C + 3.5} ${C - 115}
+  C ${C + 5} ${C - 98}, ${C + 6.5} ${C - 78}, ${C + 7.5} ${C - 55}
+  C ${C + 8} ${C - 30}, ${C + 8} ${C - 5}, ${C + 7} ${C + 12}
   Z
 `;
 
-// Organic twig-style minute hand — thinner, longer, elegant
+// Minute hand — longer, slightly thinner walnut branch
 const MINUTE_PATH = `
-  M ${C - 3.5} ${C + 12}
-  C ${C - 4} ${C - 8}, ${C - 4} ${C - 40}, ${C - 3.5} ${C - 75}
-  C ${C - 3} ${C - 110}, ${C - 2.5} ${C - 140}, ${C - 1.8} ${C - 165}
-  C ${C - 1} ${C - 180}, ${C - 0.5} ${C - 188}, ${C} ${C - 194}
-  C ${C + 0.5} ${C - 188}, ${C + 1} ${C - 180}, ${C + 1.8} ${C - 165}
-  C ${C + 2.5} ${C - 140}, ${C + 3} ${C - 110}, ${C + 3.5} ${C - 75}
-  C ${C + 4} ${C - 40}, ${C + 4} ${C - 8}, ${C + 3.5} ${C + 12}
+  M ${C - 5.5} ${C + 14}
+  C ${C - 6} ${C - 8}, ${C - 6} ${C - 40}, ${C - 5.5} ${C - 75}
+  C ${C - 5} ${C - 110}, ${C - 4} ${C - 140}, ${C - 2.8} ${C - 165}
+  C ${C - 1.5} ${C - 180}, ${C - 0.8} ${C - 188}, ${C} ${C - 194}
+  C ${C + 0.8} ${C - 188}, ${C + 1.5} ${C - 180}, ${C + 2.8} ${C - 165}
+  C ${C + 4} ${C - 140}, ${C + 5} ${C - 110}, ${C + 5.5} ${C - 75}
+  C ${C + 6} ${C - 40}, ${C + 6} ${C - 8}, ${C + 5.5} ${C + 14}
   Z
 `;
 
