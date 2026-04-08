@@ -40,13 +40,17 @@ const SECOND_PATH = `
   Z
 `;
 
-// Straight rectangular hour markers (12 positions)
-const R = 180; // marker radius
+// Thin brass hour markers (12 positions) — like reference image
+const MARKER_R_OUTER = 210; // outer edge radius
+const MARKER_R_INNER = 185; // inner edge radius (length ~25px)
 const markers = Array.from({ length: 12 }, (_, i) => {
-  const angle = (i * 30 - 90) * (Math.PI / 180);
-  const x = C + R * Math.cos(angle);
-  const y = C + R * Math.sin(angle);
-  return { x, y, rotation: i * 30 };
+  const angleDeg = i * 30 - 90;
+  const angleRad = angleDeg * (Math.PI / 180);
+  const x1 = C + MARKER_R_INNER * Math.cos(angleRad);
+  const y1 = C + MARKER_R_INNER * Math.sin(angleRad);
+  const x2 = C + MARKER_R_OUTER * Math.cos(angleRad);
+  const y2 = C + MARKER_R_OUTER * Math.sin(angleRad);
+  return { x1, y1, x2, y2 };
 });
 
 const HeroClock = () => {
@@ -157,18 +161,20 @@ const HeroClock = () => {
           </filter>
         </defs>
 
-        {/* ── Hour markers ── */}
-        {markers.map((m, i) => {
-          const isCardinal = i % 3 === 0;
-          const w = isCardinal ? 5 : 3;
-          const h = isCardinal ? 18 : 12;
-          return (
-            <g key={i} transform={`rotate(${m.rotation} ${m.x} ${m.y})`} filter="url(#thinShadow)">
-              <rect x={m.x - w / 2} y={m.y - h / 2} width={w} height={h} rx="1" fill="url(#markerWood)" />
-              <rect x={m.x - w / 2} y={m.y - h / 2} width={w} height={h} rx="1" fill="url(#grainPattern)" opacity="0.4" />
-            </g>
-          );
-        })}
+        {/* ── Hour markers — thin brass bars like reference ── */}
+        {markers.map((m, i) => (
+          <line
+            key={i}
+            x1={m.x1}
+            y1={m.y1}
+            x2={m.x2}
+            y2={m.y2}
+            stroke="#C9A84C"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            filter="url(#thinShadow)"
+          />
+        ))}
 
         {/* ── Hour hand ── */}
         <g transform={`rotate(${angles.h} ${C} ${C})`} filter="url(#handShadow)">
