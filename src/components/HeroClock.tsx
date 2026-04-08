@@ -1,22 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 
-const CLOCK_SIZE = 320;
+const CLOCK_SIZE = 340;
 const CENTER = CLOCK_SIZE / 2;
-const FACE_RADIUS = 130;
-const WOOD_WIDTH = 22;
-const OUTER_RADIUS = FACE_RADIUS + WOOD_WIDTH;
-const MARKER_RADIUS = 112;
-const MARKER_SIZE = 4;
-const HOUR_LENGTH = 70;
-const MINUTE_LENGTH = 95;
-const SECOND_LENGTH = 105;
-const SECOND_TAIL = 28;
-
-const woodGrainLines = Array.from({ length: 18 }, (_, i) => ({
-  offset: (i / 18) * 100,
-  opacity: 0.08 + Math.random() * 0.12,
-  width: 0.5 + Math.random() * 1.2,
-}));
+const FACE_RADIUS = 155;
+const MARKER_INNER = 128;
+const MARKER_OUTER = 142;
+const HOUR_LENGTH = 75;
+const MINUTE_LENGTH = 105;
+const SECOND_LENGTH = 115;
+const SECOND_TAIL = 26;
 
 const HeroClock = () => {
   const rafRef = useRef<number>(0);
@@ -29,22 +21,24 @@ const HeroClock = () => {
       const sec = now.getSeconds() + ms / 1000;
       const min = now.getMinutes() + sec / 60;
       const hr = (now.getHours() % 12) + min / 60;
-      setAngles({
-        h: hr * 30,
-        m: min * 6,
-        s: sec * 6,
-      });
+      setAngles({ h: hr * 30, m: min * 6, s: sec * 6 });
       rafRef.current = requestAnimationFrame(tick);
     };
     rafRef.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(rafRef.current);
   }, []);
 
-  const markers = Array.from({ length: 12 }, (_, i) => {
+  // Generate stick markers at each hour position
+  const stickMarkers = Array.from({ length: 12 }, (_, i) => {
     const angle = (i * 30 - 90) * (Math.PI / 180);
+    const isQuarter = i % 3 === 0;
+    const inner = isQuarter ? MARKER_INNER - 4 : MARKER_INNER;
     return {
-      cx: CENTER + MARKER_RADIUS * Math.cos(angle),
-      cy: CENTER + MARKER_RADIUS * Math.sin(angle),
+      x1: CENTER + inner * Math.cos(angle),
+      y1: CENTER + inner * Math.sin(angle),
+      x2: CENTER + MARKER_OUTER * Math.cos(angle),
+      y2: CENTER + MARKER_OUTER * Math.sin(angle),
+      width: isQuarter ? 2.5 : 1.5,
     };
   });
 
@@ -55,157 +49,269 @@ const HeroClock = () => {
         height={CLOCK_SIZE}
         viewBox={`0 0 ${CLOCK_SIZE} ${CLOCK_SIZE}`}
         className="hero-clock"
+        style={{ filter: "drop-shadow(0 8px 32px rgba(0,0,0,0.18))" }}
       >
         <defs>
-          {/* Wood grain pattern */}
-          <pattern id="woodGrain" patternUnits="userSpaceOnUse" width="40" height="40">
-            <rect width="40" height="40" fill="#5C3D2E" />
-            {woodGrainLines.map((l, i) => (
+          {/* Rich olive/burl wood base */}
+          <radialGradient id="woodBase" cx="35%" cy="40%" r="70%">
+            <stop offset="0%" stopColor="#b8944a" />
+            <stop offset="30%" stopColor="#8b6c3e" />
+            <stop offset="60%" stopColor="#6b4e2e" />
+            <stop offset="100%" stopColor="#4a3420" />
+          </radialGradient>
+
+          {/* Wood section 1 - top left burl */}
+          <radialGradient id="wood1" cx="40%" cy="35%" r="55%">
+            <stop offset="0%" stopColor="#c9a050" />
+            <stop offset="25%" stopColor="#a67d3d" />
+            <stop offset="50%" stopColor="#8b6c3e" />
+            <stop offset="75%" stopColor="#6d4c2a" />
+            <stop offset="100%" stopColor="#4a3420" />
+          </radialGradient>
+
+          {/* Wood section 2 - right piece */}
+          <radialGradient id="wood2" cx="60%" cy="55%" r="50%">
+            <stop offset="0%" stopColor="#d4a957" />
+            <stop offset="30%" stopColor="#b8873a" />
+            <stop offset="60%" stopColor="#8b6c3e" />
+            <stop offset="100%" stopColor="#5a3d24" />
+          </radialGradient>
+
+          {/* Wood section 3 - bottom center */}
+          <radialGradient id="wood3" cx="45%" cy="50%" r="55%">
+            <stop offset="0%" stopColor="#c4963e" />
+            <stop offset="35%" stopColor="#9e7630" />
+            <stop offset="70%" stopColor="#7a5a28" />
+            <stop offset="100%" stopColor="#4a3420" />
+          </radialGradient>
+
+          {/* Wood section 4 - bottom right */}
+          <radialGradient id="wood4" cx="55%" cy="45%" r="50%">
+            <stop offset="0%" stopColor="#bfa04a" />
+            <stop offset="40%" stopColor="#9a7a35" />
+            <stop offset="100%" stopColor="#5c4020" />
+          </radialGradient>
+
+          {/* Smoky epoxy resin fill */}
+          <radialGradient id="epoxyResin" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#8a8878" stopOpacity="0.6" />
+            <stop offset="40%" stopColor="#6b6a5e" stopOpacity="0.5" />
+            <stop offset="70%" stopColor="#5a5950" stopOpacity="0.55" />
+            <stop offset="100%" stopColor="#4a4940" stopOpacity="0.65" />
+          </radialGradient>
+
+          {/* Glossy sheen overlay - top-left highlight */}
+          <radialGradient id="glossSheen" cx="35%" cy="30%" r="50%">
+            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.18" />
+            <stop offset="40%" stopColor="#ffffff" stopOpacity="0.06" />
+            <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
+          </radialGradient>
+
+          {/* Edge reflection - bottom right */}
+          <radialGradient id="edgeReflection" cx="70%" cy="70%" r="40%">
+            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.08" />
+            <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
+          </radialGradient>
+
+          {/* Depth shadow inside */}
+          <radialGradient id="depthShadow" cx="50%" cy="50%" r="50%">
+            <stop offset="70%" stopColor="#000000" stopOpacity="0" />
+            <stop offset="95%" stopColor="#000000" stopOpacity="0.15" />
+            <stop offset="100%" stopColor="#000000" stopOpacity="0.25" />
+          </radialGradient>
+
+          {/* Wood grain line pattern */}
+          <pattern id="grainLines" patternUnits="userSpaceOnUse" width="200" height="200" patternTransform="rotate(15)">
+            {Array.from({ length: 30 }, (_, i) => (
               <line
                 key={i}
                 x1="0"
-                y1={`${l.offset}%`}
-                x2="40"
-                y2={`${l.offset + 2}%`}
-                stroke="#3E2723"
-                strokeWidth={l.width}
-                opacity={l.opacity}
+                y1={i * 7 + Math.sin(i) * 3}
+                x2="200"
+                y2={i * 7 + Math.cos(i) * 4 + 2}
+                stroke="#3a2510"
+                strokeWidth={0.3 + Math.sin(i * 0.7) * 0.3}
+                opacity={0.15 + Math.sin(i * 1.3) * 0.08}
               />
             ))}
           </pattern>
 
-          {/* Epoxy sheen gradient */}
-          <radialGradient id="epoxySheen" cx="40%" cy="35%" r="60%">
-            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.10" />
-            <stop offset="50%" stopColor="#ffffff" stopOpacity="0.03" />
-            <stop offset="100%" stopColor="#000000" stopOpacity="0" />
-          </radialGradient>
+          {/* Burl swirl pattern */}
+          <pattern id="burlSwirl" patternUnits="userSpaceOnUse" width="60" height="60">
+            <circle cx="30" cy="30" r="20" fill="none" stroke="#5a3d20" strokeWidth="0.5" opacity="0.12" />
+            <circle cx="30" cy="30" r="14" fill="none" stroke="#4a3018" strokeWidth="0.4" opacity="0.1" />
+            <circle cx="30" cy="30" r="8" fill="none" stroke="#6b4e2e" strokeWidth="0.3" opacity="0.08" />
+            <circle cx="28" cy="28" r="24" fill="none" stroke="#5a3d20" strokeWidth="0.3" opacity="0.06" />
+          </pattern>
 
-          {/* Dark mode center glow */}
-          <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#d4af37" stopOpacity="0.12" />
-            <stop offset="60%" stopColor="#d4af37" stopOpacity="0.03" />
-            <stop offset="100%" stopColor="#d4af37" stopOpacity="0" />
-          </radialGradient>
+          {/* Clip path for the clock face */}
+          <clipPath id="clockClip">
+            <circle cx={CENTER} cy={CENTER} r={FACE_RADIUS} />
+          </clipPath>
 
-          {/* Dark mode epoxy inner glow */}
-          <radialGradient id="epoxyDarkGlow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#1a4a4a" stopOpacity="0.15" />
-            <stop offset="70%" stopColor="#0d2f2f" stopOpacity="0.06" />
-            <stop offset="100%" stopColor="#000" stopOpacity="0" />
-          </radialGradient>
+          {/* Gold metallic gradient for hands */}
+          <linearGradient id="goldHand" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#e8c44a" />
+            <stop offset="50%" stopColor="#d4af37" />
+            <stop offset="100%" stopColor="#b8942e" />
+          </linearGradient>
 
-          {/* Gold marker glow filter */}
-          <filter id="markerGlow" x="-200%" y="-200%" width="500%" height="500%">
-            <feGaussianBlur stdDeviation="3" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-
-          {/* Hand glow filter */}
-          <filter id="handGlow" x="-200%" y="-200%" width="500%" height="500%">
-            <feGaussianBlur stdDeviation="2" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
+          {/* Subtle hand shadow */}
+          <filter id="handShadow" x="-50%" y="-50%" width="200%" height="200%">
+            <feDropShadow dx="0.5" dy="1" stdDeviation="1" floodColor="#000" floodOpacity="0.3" />
           </filter>
         </defs>
 
-        {/* Wood frame ring */}
+        {/* === CLOCK BODY === */}
+
+        {/* Outer shadow ring for depth */}
+        <circle cx={CENTER} cy={CENTER} r={FACE_RADIUS + 2} fill="none" stroke="#2a1a0e" strokeWidth="1.5" opacity="0.2" />
+
+        {/* Main clock face group - clipped */}
+        <g clipPath="url(#clockClip)">
+          {/* Background - smoky epoxy base */}
+          <circle cx={CENTER} cy={CENTER} r={FACE_RADIUS} fill="#6b6960" />
+
+          {/* Epoxy resin translucent layer */}
+          <circle cx={CENTER} cy={CENTER} r={FACE_RADIUS} fill="url(#epoxyResin)" />
+
+          {/* === WOOD SECTIONS - organic irregular shapes === */}
+
+          {/* Wood piece 1 - Large top-left burl (11 o'clock area) */}
+          <path
+            d="M 85 45 C 95 30, 130 20, 155 35 C 175 48, 180 70, 170 95 C 162 115, 145 125, 125 128 C 108 130, 90 122, 78 108 C 65 92, 60 70, 72 52 Z"
+            fill="url(#wood1)"
+          />
+          <path
+            d="M 85 45 C 95 30, 130 20, 155 35 C 175 48, 180 70, 170 95 C 162 115, 145 125, 125 128 C 108 130, 90 122, 78 108 C 65 92, 60 70, 72 52 Z"
+            fill="url(#burlSwirl)"
+          />
+          <path
+            d="M 85 45 C 95 30, 130 20, 155 35 C 175 48, 180 70, 170 95 C 162 115, 145 125, 125 128 C 108 130, 90 122, 78 108 C 65 92, 60 70, 72 52 Z"
+            fill="url(#grainLines)"
+          />
+
+          {/* Wood piece 2 - Right side piece (2-3 o'clock area) */}
+          <path
+            d="M 225 90 C 245 100, 260 125, 265 150 C 268 170, 258 195, 242 210 C 228 222, 210 225, 195 218 C 182 212, 175 195, 178 178 C 180 165, 192 148, 202 135 C 210 124, 218 105, 225 90 Z"
+            fill="url(#wood2)"
+          />
+          <path
+            d="M 225 90 C 245 100, 260 125, 265 150 C 268 170, 258 195, 242 210 C 228 222, 210 225, 195 218 C 182 212, 175 195, 178 178 C 180 165, 192 148, 202 135 C 210 124, 218 105, 225 90 Z"
+            fill="url(#burlSwirl)"
+          />
+          <path
+            d="M 225 90 C 245 100, 260 125, 265 150 C 268 170, 258 195, 242 210 C 228 222, 210 225, 195 218 C 182 212, 175 195, 178 178 C 180 165, 192 148, 202 135 C 210 124, 218 105, 225 90 Z"
+            fill="url(#grainLines)"
+          />
+
+          {/* Wood piece 3 - Bottom center burl (5-7 o'clock area) */}
+          <path
+            d="M 105 230 C 118 215, 140 205, 165 208 C 190 210, 210 225, 218 245 C 224 260, 220 278, 208 290 C 195 300, 172 305, 150 298 C 130 292, 112 275, 105 255 C 100 242, 100 238, 105 230 Z"
+            fill="url(#wood3)"
+          />
+          <path
+            d="M 105 230 C 118 215, 140 205, 165 208 C 190 210, 210 225, 218 245 C 224 260, 220 278, 208 290 C 195 300, 172 305, 150 298 C 130 292, 112 275, 105 255 C 100 242, 100 238, 105 230 Z"
+            fill="url(#burlSwirl)"
+          />
+          <path
+            d="M 105 230 C 118 215, 140 205, 165 208 C 190 210, 210 225, 218 245 C 224 260, 220 278, 208 290 C 195 300, 172 305, 150 298 C 130 292, 112 275, 105 255 C 100 242, 100 238, 105 230 Z"
+            fill="url(#grainLines)"
+          />
+
+          {/* Wood piece 4 - Small left piece (8-9 o'clock) */}
+          <path
+            d="M 55 165 C 48 150, 52 130, 65 120 C 78 112, 95 115, 105 128 C 112 138, 110 158, 100 172 C 92 183, 78 190, 65 185 C 55 180, 52 175, 55 165 Z"
+            fill="url(#wood4)"
+          />
+          <path
+            d="M 55 165 C 48 150, 52 130, 65 120 C 78 112, 95 115, 105 128 C 112 138, 110 158, 100 172 C 92 183, 78 190, 65 185 C 55 180, 52 175, 55 165 Z"
+            fill="url(#burlSwirl)"
+          />
+
+          {/* Wood edge details - bark-like rough edges */}
+          <path
+            d="M 85 45 C 82 48, 78 52, 72 52"
+            fill="none" stroke="#3a2510" strokeWidth="0.8" opacity="0.2"
+          />
+          <path
+            d="M 125 128 C 122 132, 118 135, 112 134"
+            fill="none" stroke="#3a2510" strokeWidth="0.6" opacity="0.15"
+          />
+
+          {/* Depth/shadow overlay */}
+          <circle cx={CENTER} cy={CENTER} r={FACE_RADIUS} fill="url(#depthShadow)" />
+
+          {/* Glossy epoxy sheen - top highlight */}
+          <circle cx={CENTER} cy={CENTER} r={FACE_RADIUS} fill="url(#glossSheen)" />
+
+          {/* Edge reflection */}
+          <circle cx={CENTER} cy={CENTER} r={FACE_RADIUS} fill="url(#edgeReflection)" />
+        </g>
+
+        {/* Outer glass edge ring */}
         <circle
           cx={CENTER}
           cy={CENTER}
-          r={OUTER_RADIUS}
-          fill="url(#woodGrain)"
-          className="clock-wood-frame"
-        />
-        {/* Wood frame inner shadow */}
-        <circle
-          cx={CENTER}
-          cy={CENTER}
-          r={OUTER_RADIUS}
+          r={FACE_RADIUS}
           fill="none"
-          stroke="#2a1a0e"
-          strokeWidth="1"
-          opacity="0.3"
+          stroke="rgba(255,255,255,0.12)"
+          strokeWidth="1.5"
+        />
+        <circle
+          cx={CENTER}
+          cy={CENTER}
+          r={FACE_RADIUS - 1}
+          fill="none"
+          stroke="rgba(0,0,0,0.1)"
+          strokeWidth="0.5"
         />
 
-        {/* Epoxy face */}
-        <circle
-          cx={CENTER}
-          cy={CENTER}
-          r={FACE_RADIUS}
-          fill="#0a0a0a"
-          className="clock-epoxy-face"
-        />
-        {/* Dark mode epoxy glow overlay */}
-        <circle
-          cx={CENTER}
-          cy={CENTER}
-          r={FACE_RADIUS}
-          fill="url(#epoxyDarkGlow)"
-          className="clock-epoxy-dark-glow"
-        />
-        {/* Wet sheen highlight */}
-        <circle
-          cx={CENTER}
-          cy={CENTER}
-          r={FACE_RADIUS}
-          fill="url(#epoxySheen)"
-        />
-
-        {/* Dark mode center radial glow */}
-        <circle
-          cx={CENTER}
-          cy={CENTER}
-          r={FACE_RADIUS}
-          fill="url(#centerGlow)"
-          className="clock-center-glow"
-        />
-
-        {/* Hour markers */}
-        {markers.map((m, i) => (
-          <circle
+        {/* === GOLD STICK MARKERS === */}
+        {stickMarkers.map((m, i) => (
+          <line
             key={i}
-            cx={m.cx}
-            cy={m.cy}
-            r={i % 3 === 0 ? MARKER_SIZE + 0.5 : MARKER_SIZE}
-            fill="#d4af37"
-            className="clock-marker"
+            x1={m.x1}
+            y1={m.y1}
+            x2={m.x2}
+            y2={m.y2}
+            stroke="#d4af37"
+            strokeWidth={m.width}
+            strokeLinecap="round"
+            opacity="0.9"
           />
         ))}
+
+        {/* === CLOCK HANDS === */}
 
         {/* Hour hand */}
         <line
           x1={CENTER}
-          y1={CENTER}
+          y1={CENTER + 12}
           x2={CENTER}
           y2={CENTER - HOUR_LENGTH}
-          stroke="#d4af37"
-          strokeWidth="3.5"
+          stroke="url(#goldHand)"
+          strokeWidth="4"
           strokeLinecap="round"
           transform={`rotate(${angles.h} ${CENTER} ${CENTER})`}
-          className="clock-hand"
+          filter="url(#handShadow)"
         />
 
         {/* Minute hand */}
         <line
           x1={CENTER}
-          y1={CENTER}
+          y1={CENTER + 14}
           x2={CENTER}
           y2={CENTER - MINUTE_LENGTH}
-          stroke="#d4af37"
-          strokeWidth="2.2"
+          stroke="url(#goldHand)"
+          strokeWidth="2.8"
           strokeLinecap="round"
           transform={`rotate(${angles.m} ${CENTER} ${CENTER})`}
-          className="clock-hand"
+          filter="url(#handShadow)"
         />
 
-        {/* Second hand with counterweight tail */}
-        <g transform={`rotate(${angles.s} ${CENTER} ${CENTER})`} className="clock-hand clock-second-hand">
+        {/* Second hand with tail */}
+        <g transform={`rotate(${angles.s} ${CENTER} ${CENTER})`}>
           <line
             x1={CENTER}
             y1={CENTER + SECOND_TAIL}
@@ -215,7 +321,6 @@ const HeroClock = () => {
             strokeWidth="1"
             strokeLinecap="round"
           />
-          {/* Counterweight */}
           <circle
             cx={CENTER}
             cy={CENTER + SECOND_TAIL - 4}
@@ -224,32 +329,10 @@ const HeroClock = () => {
           />
         </g>
 
-        {/* Center pivot */}
-        <circle
-          cx={CENTER}
-          cy={CENTER}
-          r="5"
-          fill="#d4af37"
-          className="clock-pivot"
-        />
-        <circle
-          cx={CENTER}
-          cy={CENTER}
-          r="2.5"
-          fill="#0a0a0a"
-        />
-
-        {/* Outer ring highlight */}
-        <circle
-          cx={CENTER}
-          cy={CENTER}
-          r={OUTER_RADIUS}
-          fill="none"
-          stroke="#8B6914"
-          strokeWidth="0.5"
-          opacity="0.2"
-          className="clock-outer-ring"
-        />
+        {/* Center pivot - gold with depth */}
+        <circle cx={CENTER} cy={CENTER} r="7" fill="#d4af37" filter="url(#handShadow)" />
+        <circle cx={CENTER} cy={CENTER} r="4" fill="#b8942e" />
+        <circle cx={CENTER} cy={CENTER} r="2" fill="#e8c44a" opacity="0.6" />
       </svg>
     </div>
   );
