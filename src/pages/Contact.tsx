@@ -1,5 +1,5 @@
 import FadeUp from "@/components/FadeUp";
-import { MessageCircle, Mail, Instagram, ArrowRight } from "lucide-react";
+import { MessageCircle, Mail, Instagram, Facebook, ArrowRight } from "lucide-react";
 
 const contactCards = [
   {

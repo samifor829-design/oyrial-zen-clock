@@ -19,6 +19,15 @@ const Footer = () => (
             Instagram
           </a>
           <a
+            href="https://facebook.com/oyrial"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-oyrial-offwhite transition-colors flex items-center gap-1.5"
+          >
+            <Facebook size={16} />
+            Facebook
+          </a>
+          <a
             href="https://wa.me/8801609573884"
             target="_blank"
             rel="noopener noreferrer"
