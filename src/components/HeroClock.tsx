@@ -38,6 +38,19 @@ const SECOND_PATH = `
   Z
 `;
 
+// Hour markers - brass bars like the reference image
+const MARKER_R_INNER = 175;
+const MARKER_R_OUTER = 205;
+const markers = Array.from({ length: 12 }, (_, i) => {
+  const angle = (i * 30 - 90) * (Math.PI / 180);
+  return {
+    x1: C + MARKER_R_INNER * Math.cos(angle),
+    y1: C + MARKER_R_INNER * Math.sin(angle),
+    x2: C + MARKER_R_OUTER * Math.cos(angle),
+    y2: C + MARKER_R_OUTER * Math.sin(angle),
+  };
+});
+
 const HeroClock = () => {
   const rafRef = useRef<number>(0);
   const [angles, setAngles] = useState({ h: 0, m: 0, s: 0 });
@@ -135,6 +148,19 @@ const HeroClock = () => {
             <feDropShadow dx="0.2" dy="0.8" stdDeviation="0.5" floodColor="rgba(30,18,8,0.2)" />
           </filter>
         </defs>
+
+        {/* Brass hour markers */}
+        {markers.map((m, i) => (
+          <line
+            key={i}
+            x1={m.x1} y1={m.y1}
+            x2={m.x2} y2={m.y2}
+            stroke="#C9A84C"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            filter="url(#thinShadow)"
+          />
+        ))}
 
         {/* Hour hand */}
         <g transform={`rotate(${angles.h} ${C} ${C})`} filter="url(#handShadow)">
