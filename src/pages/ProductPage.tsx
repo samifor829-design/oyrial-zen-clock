@@ -150,10 +150,10 @@ const ProductPage = () => {
             </div>
             {/* Delivery estimate */}
             <p className="mt-3 text-xs text-oyrial-muted text-center">
-              🚚 Estimated Delivery: 3–5 business days within Dhaka | 5–7 days outside Dhaka
+              🚚 Estimated Delivery: 7–10 business days
             </p>
             <p className="mt-1 text-xs text-oyrial-muted text-center">
-              Free delivery within Dhaka · Custom orders via WhatsApp
+              Custom orders via WhatsApp
             </p>
           </FadeUp>
 
