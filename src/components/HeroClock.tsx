@@ -34,7 +34,8 @@ const HeroClock = () => {
         alt="Epoxy resin and wood clock"
         width={SIZE}
         height={SIZE}
-        className="absolute inset-0 w-full h-full object-contain"
+        className="absolute inset-0 w-full h-full object-cover rounded-full"
+        style={{ clipPath: "circle(48% at center)" }}
         draggable={false}
       />
 
