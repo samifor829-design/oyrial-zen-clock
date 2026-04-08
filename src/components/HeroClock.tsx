@@ -70,7 +70,7 @@ const HeroClock = () => {
   }, []);
 
   return (
-    <div className="relative mx-auto h-[380px] w-[380px] sm:h-[420px] sm:w-[420px] md:h-[450px] md:w-[450px]">
+    <div className="relative mx-auto h-[420px] w-[420px] sm:h-[480px] sm:w-[480px] md:h-[540px] md:w-[540px]">
       <img
         src={clockFace}
         alt="Premium epoxy resin and wood wall clock"
