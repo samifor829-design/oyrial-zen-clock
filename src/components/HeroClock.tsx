@@ -157,12 +157,12 @@ const HeroClock = () => {
             y={m.y}
             textAnchor="middle"
             dominantBaseline="central"
-            fontSize={m.label === "12" ? "28" : "32"}
+            fontSize={m.label === "12" ? "42" : "48"}
             fontFamily="'Cormorant Garamond', serif"
-            fontWeight="700"
+            fontWeight="800"
             fill="#5C3A1E"
             stroke="#3D2410"
-            strokeWidth="0.5"
+            strokeWidth="1"
             filter="url(#handShadow)"
             style={{ paintOrder: "stroke" }}
           >
