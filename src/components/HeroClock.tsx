@@ -80,7 +80,7 @@ const HeroClock = () => {
         className="absolute inset-0 h-full w-full rounded-full object-cover"
         style={{
           clipPath: "circle(46% at 50% 49.5%)",
-          filter: "brightness(1.35) contrast(0.9) saturate(1.1)",
+          filter: "brightness(1.5) contrast(0.85) saturate(1.15)",
         }}
         draggable={false}
       />
