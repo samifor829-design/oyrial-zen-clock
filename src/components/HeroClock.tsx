@@ -39,7 +39,7 @@ const SECOND_PATH = `
 `;
 
 // Wooden number positions at 12, 3, 6, 9
-const NUMBER_R = 155;
+const NUMBER_R = 165;
 const numberMarkers = [
   { label: "12", angle: -90 },
   { label: "3", angle: 0 },
