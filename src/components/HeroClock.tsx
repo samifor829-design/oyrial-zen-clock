@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import clockFace from "@/assets/clock-face-epoxy.png";
 
-const CLOCK_SIZE = 340;
-const CENTER = CLOCK_SIZE / 2;
-const HOUR_LENGTH = 72;
-const MINUTE_LENGTH = 100;
-const SECOND_LENGTH = 110;
-const SECOND_TAIL = 24;
+const SIZE = 340;
+const C = SIZE / 2;
+const HOUR_LEN = 68;
+const MIN_LEN = 95;
+const SEC_LEN = 108;
+const SEC_TAIL = 22;
 
 const HeroClock = () => {
   const rafRef = useRef<number>(0);
@@ -27,79 +27,65 @@ const HeroClock = () => {
   }, []);
 
   return (
-    <div className="hero-clock-wrapper relative" style={{ width: CLOCK_SIZE, height: CLOCK_SIZE }}>
-      {/* Photorealistic clock face image */}
+    <div className="relative inline-block" style={{ width: SIZE, height: SIZE }}>
+      {/* Clock face image — no shadow, no extra styles */}
       <img
         src={clockFace}
-        alt="Epoxy resin and wood clock face"
-        width={CLOCK_SIZE}
-        height={CLOCK_SIZE}
-        className="absolute inset-0 w-full h-full rounded-full object-cover"
-        style={{ filter: "drop-shadow(0 8px 32px rgba(0,0,0,0.22))" }}
+        alt="Epoxy resin and wood clock"
+        width={SIZE}
+        height={SIZE}
+        className="absolute inset-0 w-full h-full object-cover rounded-full"
+        style={{ clipPath: "circle(48% at center)" }}
+        draggable={false}
       />
 
-      {/* Live SVG hands overlay */}
+      {/* SVG hands overlay — exactly same size, centered */}
       <svg
-        width={CLOCK_SIZE}
-        height={CLOCK_SIZE}
-        viewBox={`0 0 ${CLOCK_SIZE} ${CLOCK_SIZE}`}
-        className="absolute inset-0"
+        width={SIZE}
+        height={SIZE}
+        viewBox={`0 0 ${SIZE} ${SIZE}`}
+        className="absolute inset-0 w-full h-full"
+        style={{ pointerEvents: "none" }}
       >
         <defs>
-          <linearGradient id="goldHand" x1="0%" y1="0%" x2="100%" y2="100%">
+          <linearGradient id="goldH" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#e8c44a" />
-            <stop offset="50%" stopColor="#d4af37" />
             <stop offset="100%" stopColor="#b8942e" />
           </linearGradient>
-          <filter id="handShadow" x="-50%" y="-50%" width="200%" height="200%">
-            <feDropShadow dx="0.5" dy="1.5" stdDeviation="1.5" floodColor="#000" floodOpacity="0.35" />
+          <filter id="hShadow">
+            <feDropShadow dx="0.5" dy="1" stdDeviation="1" floodColor="#000" floodOpacity="0.3" />
           </filter>
         </defs>
 
         {/* Hour hand */}
         <line
-          x1={CENTER}
-          y1={CENTER + 14}
-          x2={CENTER}
-          y2={CENTER - HOUR_LENGTH}
-          stroke="url(#goldHand)"
-          strokeWidth="4.5"
-          strokeLinecap="round"
-          transform={`rotate(${angles.h} ${CENTER} ${CENTER})`}
-          filter="url(#handShadow)"
+          x1={C} y1={C + 12} x2={C} y2={C - HOUR_LEN}
+          stroke="url(#goldH)" strokeWidth="5" strokeLinecap="round"
+          transform={`rotate(${angles.h} ${C} ${C})`}
+          filter="url(#hShadow)"
         />
 
         {/* Minute hand */}
         <line
-          x1={CENTER}
-          y1={CENTER + 16}
-          x2={CENTER}
-          y2={CENTER - MINUTE_LENGTH}
-          stroke="url(#goldHand)"
-          strokeWidth="3"
-          strokeLinecap="round"
-          transform={`rotate(${angles.m} ${CENTER} ${CENTER})`}
-          filter="url(#handShadow)"
+          x1={C} y1={C + 14} x2={C} y2={C - MIN_LEN}
+          stroke="url(#goldH)" strokeWidth="3.2" strokeLinecap="round"
+          transform={`rotate(${angles.m} ${C} ${C})`}
+          filter="url(#hShadow)"
         />
 
         {/* Second hand */}
-        <g transform={`rotate(${angles.s} ${CENTER} ${CENTER})`}>
+        <g transform={`rotate(${angles.s} ${C} ${C})`}>
           <line
-            x1={CENTER}
-            y1={CENTER + SECOND_TAIL}
-            x2={CENTER}
-            y2={CENTER - SECOND_LENGTH}
-            stroke="#c9a94e"
-            strokeWidth="1.2"
-            strokeLinecap="round"
+            x1={C} y1={C + SEC_TAIL} x2={C} y2={C - SEC_LEN}
+            stroke="#c9a94e" strokeWidth="1.2" strokeLinecap="round"
           />
-          <circle cx={CENTER} cy={CENTER + SECOND_TAIL - 4} r="3.5" fill="#c9a94e" />
+          <circle cx={C} cy={C + SEC_TAIL - 4} r="3" fill="#c9a94e" />
         </g>
 
         {/* Center pivot */}
-        <circle cx={CENTER} cy={CENTER} r="7" fill="#d4af37" filter="url(#handShadow)" />
-        <circle cx={CENTER} cy={CENTER} r="4" fill="#b8942e" />
-        <circle cx={CENTER} cy={CENTER} r="2" fill="#e8c44a" opacity="0.7" />
+        <circle cx={C} cy={C} r="6" fill="#d4af37" filter="url(#hShadow)" />
+        <circle cx={C} cy={C} r="3" fill="#b8942e" />
+        <circle cx={C} cy={C} r="1.5" fill="#e8c44a" opacity="0.7" />
       </svg>
     </div>
   );
