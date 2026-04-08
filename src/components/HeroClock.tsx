@@ -77,7 +77,7 @@ const HeroClock = () => {
         width={1024}
         height={1024}
         className="absolute inset-0 h-full w-full rounded-full object-cover"
-        style={{ clipPath: "circle(49% at 50% 50%)" }}
+        style={{ clipPath: "circle(47.5% at 50% 50%)" }}
         draggable={false}
       />
 
