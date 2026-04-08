@@ -70,7 +70,7 @@ const HeroClock = () => {
   }, []);
 
   return (
-    <div className="relative mx-auto h-[420px] w-[420px] sm:h-[550px] sm:w-[550px] md:h-[690px] md:w-[690px]" style={{ background: "transparent" }}>
+    <div className="relative mx-auto h-[420px] w-[420px] sm:h-[550px] sm:w-[550px] md:h-[690px] md:w-[690px]">
       {/* Clock face image */}
       <img
         src={clockFace}
@@ -85,15 +85,6 @@ const HeroClock = () => {
         draggable={false}
       />
 
-      {/* Glass/resin overlay for depth */}
-      <div
-        className="absolute inset-0 rounded-full"
-        style={{
-          clipPath: "circle(46% at 50% 49.5%)",
-          background: "radial-gradient(ellipse at 40% 35%, rgba(255,255,255,0.15) 0%, transparent 60%)",
-          pointerEvents: "none",
-        }}
-      />
 
       <svg
         viewBox={`0 0 ${SIZE} ${SIZE}`}
