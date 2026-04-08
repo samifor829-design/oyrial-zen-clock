@@ -80,17 +80,33 @@ const HeroClock = () => {
         className="absolute inset-0 h-full w-full rounded-full object-cover"
         style={{
           clipPath: "circle(46% at 50% 49.5%)",
-          filter: "brightness(1.35) contrast(0.9) saturate(1.1)",
+          filter: "brightness(1.4) contrast(0.85) saturate(1.05)",
+          opacity: 0.88,
         }}
         draggable={false}
       />
 
-      {/* Glass/resin overlay for depth */}
+      {/* Glass/resin overlay — subtle white wash + lighting */}
       <div
         className="absolute inset-0 rounded-full"
         style={{
           clipPath: "circle(46% at 50% 49.5%)",
-          background: "radial-gradient(ellipse at 40% 35%, rgba(255,255,255,0.15) 0%, transparent 60%)",
+          background: `
+            radial-gradient(ellipse at 35% 30%, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.08) 40%, transparent 65%),
+            radial-gradient(ellipse at 60% 70%, rgba(255,255,255,0.06) 0%, transparent 50%),
+            linear-gradient(160deg, rgba(255,255,255,0.12) 0%, transparent 50%)
+          `,
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* Subtle glass edge reflection */}
+      <div
+        className="absolute inset-0 rounded-full"
+        style={{
+          clipPath: "circle(46% at 50% 49.5%)",
+          background: "radial-gradient(circle at 50% 50%, transparent 80%, rgba(255,255,255,0.1) 95%)",
+          boxShadow: "inset 0 0 60px rgba(255,255,255,0.08)",
           pointerEvents: "none",
         }}
       />
