@@ -70,7 +70,7 @@ const HeroClock = () => {
   }, []);
 
   return (
-    <div className="relative mx-auto h-[420px] w-[420px] sm:h-[550px] sm:w-[550px] md:h-[690px] md:w-[690px]">
+    <div className="relative mx-auto h-[420px] w-[420px] sm:h-[550px] sm:w-[550px] md:h-[690px] md:w-[690px]" style={{ background: "transparent" }}>
       {/* Clock face image */}
       <img
         src={clockFace}
