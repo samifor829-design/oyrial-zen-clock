@@ -3,50 +3,70 @@ import clockFace from "@/assets/clock-face-epoxy.png";
 
 const VIEWBOX_SIZE = 460;
 const CENTER = VIEWBOX_SIZE / 2;
-const MARKER_Y = 44;
-const MARKER_WIDTH = 12;
-const MARKER_HEIGHT = 36;
 
+// Organic branch-shaped hour hand — short, thick base tapering to a thin twig tip with small natural forks
 const HOUR_HAND = `
-  M ${CENTER - 12} ${CENTER + 18}
-  C ${CENTER - 13} ${CENTER - 8}, ${CENTER - 18} ${CENTER - 40}, ${CENTER - 17} ${CENTER - 68}
-  C ${CENTER - 15} ${CENTER - 94}, ${CENTER - 11} ${CENTER - 118}, ${CENTER - 7} ${CENTER - 142}
-  L ${CENTER - 1} ${CENTER - 154}
-  L ${CENTER + 7} ${CENTER - 143}
-  C ${CENTER + 12} ${CENTER - 118}, ${CENTER + 16} ${CENTER - 94}, ${CENTER + 17} ${CENTER - 68}
-  C ${CENTER + 18} ${CENTER - 40}, ${CENTER + 13} ${CENTER - 8}, ${CENTER + 12} ${CENTER + 18}
-  Z
-  M ${CENTER + 10} ${CENTER - 96}
-  L ${CENTER + 31} ${CENTER - 115}
-  L ${CENTER + 17} ${CENTER - 79}
+  M ${CENTER - 5} ${CENTER + 12}
+  C ${CENTER - 7} ${CENTER + 2}, ${CENTER - 8} ${CENTER - 10}, ${CENTER - 7} ${CENTER - 30}
+  C ${CENTER - 6} ${CENTER - 55}, ${CENTER - 5} ${CENTER - 75}, ${CENTER - 4} ${CENTER - 95}
+  C ${CENTER - 3} ${CENTER - 108}, ${CENTER - 2} ${CENTER - 118}, ${CENTER - 1} ${CENTER - 125}
+  L ${CENTER} ${CENTER - 132}
+  L ${CENTER + 1} ${CENTER - 125}
+  C ${CENTER + 2} ${CENTER - 118}, ${CENTER + 3} ${CENTER - 108}, ${CENTER + 4} ${CENTER - 95}
+  C ${CENTER + 5} ${CENTER - 75}, ${CENTER + 6} ${CENTER - 55}, ${CENTER + 7} ${CENTER - 30}
+  C ${CENTER + 8} ${CENTER - 10}, ${CENTER + 7} ${CENTER + 2}, ${CENTER + 5} ${CENTER + 12}
   Z
 `;
 
+// Small branch fork on the hour hand
+const HOUR_FORK = `
+  M ${CENTER + 5} ${CENTER - 88}
+  Q ${CENTER + 18} ${CENTER - 105}, ${CENTER + 22} ${CENTER - 118}
+  Q ${CENTER + 16} ${CENTER - 108}, ${CENTER + 6} ${CENTER - 94}
+`;
+
+// Organic branch-shaped minute hand — longer, thinner, elegant taper
 const MINUTE_HAND = `
-  M ${CENTER - 9} ${CENTER + 20}
-  C ${CENTER - 11} ${CENTER - 10}, ${CENTER - 14} ${CENTER - 64}, ${CENTER - 14} ${CENTER - 118}
-  C ${CENTER - 13} ${CENTER - 150}, ${CENTER - 9} ${CENTER - 178}, ${CENTER - 5} ${CENTER - 202}
-  L ${CENTER} ${CENTER - 216}
-  L ${CENTER + 7} ${CENTER - 202}
-  C ${CENTER + 11} ${CENTER - 178}, ${CENTER + 14} ${CENTER - 150}, ${CENTER + 14} ${CENTER - 118}
-  C ${CENTER + 14} ${CENTER - 64}, ${CENTER + 11} ${CENTER - 10}, ${CENTER + 9} ${CENTER + 20}
-  Z
-  M ${CENTER - 12} ${CENTER - 144}
-  L ${CENTER - 38} ${CENTER - 168}
-  L ${CENTER - 18} ${CENTER - 126}
+  M ${CENTER - 4} ${CENTER + 14}
+  C ${CENTER - 6} ${CENTER}, ${CENTER - 6} ${CENTER - 20}, ${CENTER - 5} ${CENTER - 50}
+  C ${CENTER - 5} ${CENTER - 80}, ${CENTER - 4} ${CENTER - 110}, ${CENTER - 3} ${CENTER - 140}
+  C ${CENTER - 2} ${CENTER - 160}, ${CENTER - 1.5} ${CENTER - 175}, ${CENTER - 1} ${CENTER - 185}
+  L ${CENTER} ${CENTER - 194}
+  L ${CENTER + 1} ${CENTER - 185}
+  C ${CENTER + 1.5} ${CENTER - 175}, ${CENTER + 2} ${CENTER - 160}, ${CENTER + 3} ${CENTER - 140}
+  C ${CENTER + 4} ${CENTER - 110}, ${CENTER + 5} ${CENTER - 80}, ${CENTER + 5} ${CENTER - 50}
+  C ${CENTER + 6} ${CENTER - 20}, ${CENTER + 6} ${CENTER}, ${CENTER + 4} ${CENTER + 14}
   Z
 `;
 
+// Small branch fork on the minute hand
+const MINUTE_FORK = `
+  M ${CENTER - 4} ${CENTER - 130}
+  Q ${CENTER - 16} ${CENTER - 152}, ${CENTER - 20} ${CENTER - 166}
+  Q ${CENTER - 14} ${CENTER - 155}, ${CENTER - 5} ${CENTER - 136}
+`;
+
+// Thin second hand — sleek, no branching
 const SECOND_HAND = `
-  M ${CENTER - 2} ${CENTER + 18}
-  L ${CENTER - 1} ${CENTER - 178}
+  M ${CENTER - 1.2} ${CENTER + 28}
+  L ${CENTER - 0.8} ${CENTER - 185}
   L ${CENTER} ${CENTER - 196}
-  L ${CENTER + 2} ${CENTER - 178}
-  L ${CENTER + 3} ${CENTER + 18}
+  L ${CENTER + 0.8} ${CENTER - 185}
+  L ${CENTER + 1.2} ${CENTER + 28}
   Z
 `;
 
-const markerAngles = Array.from({ length: 12 }, (_, index) => index * 30);
+// 12 small circular wooden markers
+const MARKER_RADIUS = 6;
+const MARKER_DISTANCE = 196; // from center
+
+const markerPositions = Array.from({ length: 12 }, (_, i) => {
+  const angle = (i * 30 - 90) * (Math.PI / 180);
+  return {
+    x: CENTER + MARKER_DISTANCE * Math.cos(angle),
+    y: CENTER + MARKER_DISTANCE * Math.sin(angle),
+  };
+});
 
 const HeroClock = () => {
   const rafRef = useRef<number>(0);
@@ -55,20 +75,14 @@ const HeroClock = () => {
   useEffect(() => {
     const tick = () => {
       const now = new Date();
-      const milliseconds = now.getMilliseconds();
-      const seconds = now.getSeconds() + milliseconds / 1000;
-      const minutes = now.getMinutes() + seconds / 60;
-      const hours = (now.getHours() % 12) + minutes / 60;
+      const ms = now.getMilliseconds();
+      const s = now.getSeconds() + ms / 1000;
+      const m = now.getMinutes() + s / 60;
+      const h = (now.getHours() % 12) + m / 60;
 
-      setAngles({
-        h: hours * 30,
-        m: minutes * 6,
-        s: seconds * 6,
-      });
-
+      setAngles({ h: h * 30, m: m * 6, s: s * 6 });
       rafRef.current = requestAnimationFrame(tick);
     };
-
     rafRef.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(rafRef.current);
   }, []);
@@ -92,78 +106,76 @@ const HeroClock = () => {
         style={{ pointerEvents: "none" }}
       >
         <defs>
-          <linearGradient id="woodFill" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="hsl(24 47% 48%)" />
-            <stop offset="45%" stopColor="hsl(20 43% 35%)" />
-            <stop offset="100%" stopColor="hsl(18 39% 24%)" />
+          {/* Realistic walnut wood grain gradient */}
+          <linearGradient id="walnutGrain" x1="0%" y1="0%" x2="30%" y2="100%">
+            <stop offset="0%" stopColor="hsl(20 52% 42%)" />
+            <stop offset="30%" stopColor="hsl(18 48% 34%)" />
+            <stop offset="60%" stopColor="hsl(16 44% 28%)" />
+            <stop offset="100%" stopColor="hsl(14 40% 22%)" />
           </linearGradient>
 
-          <linearGradient id="woodSheen" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="hsl(34 52% 58% / 0.45)" />
-            <stop offset="100%" stopColor="hsl(18 36% 16% / 0.1)" />
+          {/* Highlight sheen for wood */}
+          <linearGradient id="walnutSheen" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="hsl(28 50% 55% / 0.35)" />
+            <stop offset="100%" stopColor="hsl(14 30% 18% / 0.05)" />
           </linearGradient>
 
-          <filter id="woodDepth" x="-30%" y="-30%" width="160%" height="160%">
-            <feDropShadow dx="0.4" dy="1.6" stdDeviation="1.4" floodColor="hsl(18 28% 14% / 0.32)" />
+          {/* Marker wood fill */}
+          <radialGradient id="markerWood" cx="40%" cy="35%">
+            <stop offset="0%" stopColor="hsl(22 50% 44%)" />
+            <stop offset="100%" stopColor="hsl(16 42% 28%)" />
+          </radialGradient>
+
+          {/* Subtle hand shadow */}
+          <filter id="handShadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0.6" dy="1.8" stdDeviation="1.6" floodColor="hsl(16 20% 10% / 0.30)" />
           </filter>
 
-          <filter id="pivotDepth" x="-50%" y="-50%" width="200%" height="200%">
-            <feDropShadow dx="0.5" dy="1.2" stdDeviation="1.2" floodColor="hsl(20 22% 12% / 0.28)" />
-          </filter>
+          {/* Brass center gradient */}
+          <radialGradient id="brassFill" cx="38%" cy="35%">
+            <stop offset="0%" stopColor="hsl(44 62% 72%)" />
+            <stop offset="60%" stopColor="hsl(40 50% 52%)" />
+            <stop offset="100%" stopColor="hsl(36 42% 38%)" />
+          </radialGradient>
         </defs>
 
-        {markerAngles.map((angle) => (
-          <g key={angle} transform={`rotate(${angle} ${CENTER} ${CENTER})`} filter="url(#woodDepth)">
-            <rect
-              x={CENTER - MARKER_WIDTH / 2}
-              y={MARKER_Y}
-              width={MARKER_WIDTH}
-              height={MARKER_HEIGHT}
-              rx="2.5"
-              fill="url(#woodFill)"
-              stroke="hsl(18 34% 18% / 0.5)"
-              strokeWidth="1.1"
-            />
-            <path
-              d={`M ${CENTER} ${MARKER_Y + 6} L ${CENTER} ${MARKER_Y + MARKER_HEIGHT - 6}`}
-              stroke="hsl(18 32% 18% / 0.25)"
-              strokeWidth="1.2"
-              strokeLinecap="round"
-            />
-          </g>
+        {/* Hour markers — small wooden circles */}
+        {markerPositions.map((pos, i) => (
+          <circle
+            key={i}
+            cx={pos.x}
+            cy={pos.y}
+            r={MARKER_RADIUS}
+            fill="url(#markerWood)"
+            stroke="hsl(14 36% 20% / 0.5)"
+            strokeWidth="0.8"
+            filter="url(#handShadow)"
+          />
         ))}
 
-        <g transform={`rotate(${angles.h} ${CENTER} ${CENTER})`} filter="url(#woodDepth)">
-          <path d={HOUR_HAND} fill="url(#woodFill)" stroke="hsl(18 38% 16% / 0.58)" strokeWidth="1.2" strokeLinejoin="round" />
-          <path d={HOUR_HAND} fill="url(#woodSheen)" opacity="0.55" />
-          <path
-            d={`M ${CENTER} ${CENTER + 4} C ${CENTER + 4} ${CENTER - 20}, ${CENTER + 5} ${CENTER - 82}, ${CENTER + 4} ${CENTER - 136}`}
-            fill="none"
-            stroke="hsl(18 34% 18% / 0.18)"
-            strokeWidth="2"
-            strokeLinecap="round"
-          />
+        {/* Hour hand — thick organic branch */}
+        <g transform={`rotate(${angles.h} ${CENTER} ${CENTER})`} filter="url(#handShadow)">
+          <path d={HOUR_HAND} fill="url(#walnutGrain)" stroke="hsl(14 38% 18% / 0.55)" strokeWidth="1" strokeLinejoin="round" />
+          <path d={HOUR_HAND} fill="url(#walnutSheen)" opacity="0.5" />
+          <path d={HOUR_FORK} fill="none" stroke="url(#walnutGrain)" strokeWidth="2.5" strokeLinecap="round" />
         </g>
 
-        <g transform={`rotate(${angles.m} ${CENTER} ${CENTER})`} filter="url(#woodDepth)">
-          <path d={MINUTE_HAND} fill="url(#woodFill)" stroke="hsl(18 38% 16% / 0.58)" strokeWidth="1.2" strokeLinejoin="round" />
-          <path d={MINUTE_HAND} fill="url(#woodSheen)" opacity="0.5" />
-          <path
-            d={`M ${CENTER - 1} ${CENTER + 8} C ${CENTER - 3} ${CENTER - 32}, ${CENTER - 3} ${CENTER - 104}, ${CENTER} ${CENTER - 198}`}
-            fill="none"
-            stroke="hsl(18 34% 18% / 0.18)"
-            strokeWidth="2"
-            strokeLinecap="round"
-          />
+        {/* Minute hand — longer, thinner branch */}
+        <g transform={`rotate(${angles.m} ${CENTER} ${CENTER})`} filter="url(#handShadow)">
+          <path d={MINUTE_HAND} fill="url(#walnutGrain)" stroke="hsl(14 38% 18% / 0.55)" strokeWidth="0.9" strokeLinejoin="round" />
+          <path d={MINUTE_HAND} fill="url(#walnutSheen)" opacity="0.45" />
+          <path d={MINUTE_FORK} fill="none" stroke="url(#walnutGrain)" strokeWidth="2" strokeLinecap="round" />
         </g>
 
-        <g transform={`rotate(${angles.s} ${CENTER} ${CENTER})`} filter="url(#woodDepth)">
-          <path d={SECOND_HAND} fill="url(#woodFill)" stroke="hsl(18 38% 16% / 0.45)" strokeWidth="0.8" strokeLinejoin="round" />
+        {/* Second hand — thin sleek line */}
+        <g transform={`rotate(${angles.s} ${CENTER} ${CENTER})`} filter="url(#handShadow)">
+          <path d={SECOND_HAND} fill="url(#walnutGrain)" stroke="hsl(14 34% 20% / 0.4)" strokeWidth="0.5" />
         </g>
 
-        <circle cx={CENTER} cy={CENTER} r="12" fill="hsl(41 50% 59%)" filter="url(#pivotDepth)" />
-        <circle cx={CENTER} cy={CENTER} r="7" fill="hsl(41 43% 43%)" />
-        <circle cx={CENTER} cy={CENTER} r="3" fill="hsl(44 58% 76%)" opacity="0.75" />
+        {/* Brass center cap */}
+        <circle cx={CENTER} cy={CENTER} r="11" fill="url(#brassFill)" filter="url(#handShadow)" />
+        <circle cx={CENTER} cy={CENTER} r="6" fill="hsl(40 48% 46%)" />
+        <circle cx={CENTER} cy={CENTER} r="2.5" fill="hsl(44 55% 70%)" opacity="0.7" />
       </svg>
     </div>
   );
