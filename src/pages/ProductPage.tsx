@@ -102,13 +102,11 @@ const ProductPage = () => {
           </FadeUp>
           <FadeUp delay={300}>
             <div className="mt-6 flex flex-wrap gap-4 text-sm text-oyrial-muted">
-              {product.features.map((f) => (
+              {product.features.filter(f => f !== "Matte Finish" && f !== "Gift Box Included").map((f) => (
                 <span key={f} className="flex items-center gap-1">
                   {f === "Silent Movement" && "🔇"}
-                  {f === "Matte Finish" && "⬛"}
                   {f === "Minimal Design" && "✦"}
                   {f === "Roman Numerals" && "✦"}
-                  {f === "Gift Box Included" && "📦"}
                   {" "}{f}
                 </span>
               ))}
