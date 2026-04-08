@@ -90,11 +90,11 @@ const HeroClock = () => {
         <defs>
           {/* Walnut wood base — rich brown with variation */}
           <linearGradient id="walnut" x1="0" y1="0" x2="0.3" y2="1">
-            <stop offset="0%" stopColor="#8B5E3C" />
-            <stop offset="25%" stopColor="#6F4528" />
-            <stop offset="50%" stopColor="#7A4F30" />
-            <stop offset="75%" stopColor="#5C3A1E" />
-            <stop offset="100%" stopColor="#4A2E16" />
+            <stop offset="0%" stopColor="#7A4F30" />
+            <stop offset="25%" stopColor="#5C3A1E" />
+            <stop offset="50%" stopColor="#6B4426" />
+            <stop offset="75%" stopColor="#4A2E16" />
+            <stop offset="100%" stopColor="#3D2410" />
           </linearGradient>
 
           {/* Edge darkening for 3D roundness */}
