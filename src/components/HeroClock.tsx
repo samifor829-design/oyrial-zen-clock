@@ -103,36 +103,31 @@ const HeroClock = () => {
       >
         <defs>
           <linearGradient id="walnut" x1="0" y1="0" x2="0.3" y2="1">
-            <stop offset="0%" stopColor="#7A4F30" />
-            <stop offset="25%" stopColor="#5C3A1E" />
-            <stop offset="50%" stopColor="#6B4426" />
-            <stop offset="75%" stopColor="#4A2E16" />
-            <stop offset="100%" stopColor="#3D2410" />
+            <stop offset="0%" stopColor="#1a1a1a" />
+            <stop offset="50%" stopColor="#0d0d0d" />
+            <stop offset="100%" stopColor="#1a1a1a" />
           </linearGradient>
 
           <linearGradient id="walnutEdge" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="#3D2410" stopOpacity="0.4" />
-            <stop offset="30%" stopColor="#3D2410" stopOpacity="0" />
-            <stop offset="70%" stopColor="#3D2410" stopOpacity="0" />
-            <stop offset="100%" stopColor="#3D2410" stopOpacity="0.4" />
+            <stop offset="0%" stopColor="#000000" stopOpacity="0.4" />
+            <stop offset="50%" stopColor="#000000" stopOpacity="0" />
+            <stop offset="100%" stopColor="#000000" stopOpacity="0.4" />
           </linearGradient>
 
           <linearGradient id="walnutHighlight" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="#C9956A" stopOpacity="0" />
-            <stop offset="40%" stopColor="#C9956A" stopOpacity="0.25" />
-            <stop offset="60%" stopColor="#C9956A" stopOpacity="0.25" />
-            <stop offset="100%" stopColor="#C9956A" stopOpacity="0" />
+            <stop offset="0%" stopColor="#444444" stopOpacity="0" />
+            <stop offset="50%" stopColor="#444444" stopOpacity="0.2" />
+            <stop offset="100%" stopColor="#444444" stopOpacity="0" />
           </linearGradient>
 
           <pattern id="grainPattern" width="4" height="80" patternUnits="userSpaceOnUse">
-            <line x1="1" y1="0" x2="1" y2="80" stroke="#4A2E16" strokeWidth="0.3" strokeOpacity="0.15" />
-            <line x1="3" y1="0" x2="3" y2="80" stroke="#6F4528" strokeWidth="0.2" strokeOpacity="0.1" />
+            <line x1="1" y1="0" x2="1" y2="80" stroke="#000000" strokeWidth="0.3" strokeOpacity="0.1" />
           </pattern>
 
           <linearGradient id="secondFill" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="#2A1A0E" />
-            <stop offset="50%" stopColor="#1E1208" />
-            <stop offset="100%" stopColor="#2A1A0E" />
+            <stop offset="0%" stopColor="#1a1a1a" />
+            <stop offset="50%" stopColor="#000000" />
+            <stop offset="100%" stopColor="#1a1a1a" />
           </linearGradient>
 
           <radialGradient id="brass" cx="40%" cy="35%">
@@ -160,8 +155,8 @@ const HeroClock = () => {
             fontSize={m.label === "12" ? "42" : "48"}
             fontFamily="'Cormorant Garamond', serif"
             fontWeight="800"
-            fill="#5C3A1E"
-            stroke="#3D2410"
+            fill="#0d0d0d"
+            stroke="#000000"
             strokeWidth="1"
             filter="url(#handShadow)"
             style={{ paintOrder: "stroke" }}
