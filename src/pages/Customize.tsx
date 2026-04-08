@@ -95,6 +95,7 @@ const Customize = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const formRef = useRef<HTMLDivElement>(null);
 
@@ -104,12 +105,13 @@ const Customize = () => {
     if (!fullName.trim()) newErrors.fullName = "Full name is required.";
     if (!email.trim()) newErrors.email = "Email is required.";
     if (!phone.trim()) newErrors.phone = "Phone number is required.";
+    if (!address.trim()) newErrors.address = "Delivery address is required.";
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length > 0) return;
 
     const msg = encodeURIComponent(
-      `Hi Oyrial! Here's my custom clock order:\n\nName: ${fullName}\nEmail: ${email}\nPhone: ${phone}\nDial Style: ${dialStyle}\nEngraving: ${engraving || "None"}\nWhere it hangs: ${location}\nVision: ${vision}`
+      `Hi Oyrial! Here's my custom clock order:\n\nName: ${fullName}\nEmail: ${email}\nPhone: ${phone}\nAddress: ${address}\nDial Style: ${dialStyle}\nEngraving: ${engraving || "None"}\nWhere it hangs: ${location}\nVision: ${vision}`
     );
     window.open(`https://wa.me/8801609573884?text=${msg}`, "_blank");
   };
@@ -201,6 +203,18 @@ const Customize = () => {
                   onChange={setPhone}
                   error={errors.phone}
                   note="We'll call to confirm your order details."
+                />
+
+                {/* 9. Delivery Address */}
+                <FloatingField
+                  label="Delivery Address"
+                  required
+                  value={address}
+                  onChange={setAddress}
+                  error={errors.address}
+                  textarea
+                  placeholder="Full address including area, city, and postal code"
+                  note="Where should we deliver your clock?"
                 />
 
                 {/* Pricing Card */}
