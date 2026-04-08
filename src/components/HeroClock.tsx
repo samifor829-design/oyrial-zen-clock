@@ -40,13 +40,17 @@ const SECOND_PATH = `
   Z
 `;
 
-// Straight rectangular hour markers (12 positions)
-const R = 180; // marker radius
+// Thin brass hour markers (12 positions) — like reference image
+const MARKER_R_OUTER = 210; // outer edge radius
+const MARKER_R_INNER = 185; // inner edge radius (length ~25px)
 const markers = Array.from({ length: 12 }, (_, i) => {
-  const angle = (i * 30 - 90) * (Math.PI / 180);
-  const x = C + R * Math.cos(angle);
-  const y = C + R * Math.sin(angle);
-  return { x, y, rotation: i * 30 };
+  const angleDeg = i * 30 - 90;
+  const angleRad = angleDeg * (Math.PI / 180);
+  const x1 = C + MARKER_R_INNER * Math.cos(angleRad);
+  const y1 = C + MARKER_R_INNER * Math.sin(angleRad);
+  const x2 = C + MARKER_R_OUTER * Math.cos(angleRad);
+  const y2 = C + MARKER_R_OUTER * Math.sin(angleRad);
+  return { x1, y1, x2, y2 };
 });
 
 const HeroClock = () => {
