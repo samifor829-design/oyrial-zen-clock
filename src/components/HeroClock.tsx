@@ -80,7 +80,7 @@ const HeroClock = () => {
         className="absolute inset-0 h-full w-full rounded-full object-cover"
         style={{
           clipPath: "circle(46% at 50% 49.5%)",
-          filter: "brightness(1.5) contrast(0.85) saturate(1.15)",
+          filter: "brightness(1.35) contrast(0.9) saturate(1.1)",
         }}
         draggable={false}
       />
@@ -90,20 +90,7 @@ const HeroClock = () => {
         className="absolute inset-0 rounded-full"
         style={{
           clipPath: "circle(46% at 50% 49.5%)",
-          background: `
-            radial-gradient(ellipse at 35% 30%, rgba(255,255,255,0.28) 0%, transparent 50%),
-            radial-gradient(ellipse at 65% 70%, rgba(255,255,255,0.08) 0%, transparent 40%),
-            radial-gradient(circle at 50% 50%, transparent 60%, rgba(0,0,0,0.06) 100%)
-          `,
-          pointerEvents: "none",
-        }}
-      />
-      {/* Glossy rim highlight */}
-      <div
-        className="absolute inset-0 rounded-full"
-        style={{
-          clipPath: "circle(46% at 50% 49.5%)",
-          background: "conic-gradient(from 200deg at 50% 50%, transparent 0deg, rgba(255,255,255,0.12) 60deg, transparent 120deg, rgba(255,255,255,0.06) 240deg, transparent 360deg)",
+          background: "radial-gradient(ellipse at 40% 35%, rgba(255,255,255,0.15) 0%, transparent 60%)",
           pointerEvents: "none",
         }}
       />
