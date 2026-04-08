@@ -38,19 +38,18 @@ const SECOND_PATH = `
   Z
 `;
 
-// Hour markers at 12, 3, 6, 9 only — thick wooden bars near the edge
-const MARKER_R_INNER = 168;
-const MARKER_R_OUTER = 208;
-const MARKER_POSITIONS = [0, 3, 6, 9]; // 12, 3, 6, 9 o'clock
-const markers = MARKER_POSITIONS.map((hour) => {
-  const angle = (hour * 30 - 90) * (Math.PI / 180);
-  return {
-    x1: C + MARKER_R_INNER * Math.cos(angle),
-    y1: C + MARKER_R_INNER * Math.sin(angle),
-    x2: C + MARKER_R_OUTER * Math.cos(angle),
-    y2: C + MARKER_R_OUTER * Math.sin(angle),
-  };
-});
+// Wooden number positions at 12, 3, 6, 9
+const NUMBER_R = 185;
+const numberMarkers = [
+  { label: "12", angle: -90 },
+  { label: "3", angle: 0 },
+  { label: "6", angle: 90 },
+  { label: "9", angle: 180 },
+].map(({ label, angle }) => ({
+  label,
+  x: C + NUMBER_R * Math.cos(angle * (Math.PI / 180)),
+  y: C + NUMBER_R * Math.sin(angle * (Math.PI / 180)),
+}));
 
 const HeroClock = () => {
   const rafRef = useRef<number>(0);
