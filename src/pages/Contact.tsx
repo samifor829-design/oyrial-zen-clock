@@ -24,7 +24,7 @@ const contactCards = [
     external: true,
   },
   {
-    href: "https://facebook.com/oyrial",
+    href: "https://www.facebook.com/share/18eU4nouYx/",
     icon: Facebook,
     label: "Oyrial on Facebook",
     sub: "Like our page, message us anytime",
