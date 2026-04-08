@@ -71,7 +71,11 @@ const Cart = () => {
               <span>৳ {total.toLocaleString()}</span>
             </div>
             <h3 className="font-serif text-xl text-oyrial-charcoal mb-4">Checkout</h3>
-            <OrderForm onSubmit={clearCart} />
+            <OrderForm
+              cartItems={items.map((i) => ({ name: i.name, price: i.price, quantity: i.quantity }))}
+              cartTotal={total}
+              onSubmit={clearCart}
+            />
           </div>
         </FadeUp>
       </div>

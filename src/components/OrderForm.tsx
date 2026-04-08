@@ -3,13 +3,33 @@ import { Input } from "@/components/ui/input";
 import { CheckCircle } from "lucide-react";
 import FadeUp from "@/components/FadeUp";
 
+interface CartItemInfo {
+  name: string;
+  price: number;
+  quantity: number;
+}
+
 interface OrderFormProps {
   defaultQuantity?: number;
   showQuantity?: boolean;
   onSubmit?: () => void;
+  /** For cart checkout: pass all cart items */
+  cartItems?: CartItemInfo[];
+  cartTotal?: number;
+  /** For single product buy-now */
+  productName?: string;
+  productPrice?: number;
 }
 
-const OrderForm = ({ defaultQuantity = 1, showQuantity = false, onSubmit }: OrderFormProps) => {
+const OrderForm = ({
+  defaultQuantity = 1,
+  showQuantity = false,
+  onSubmit,
+  cartItems,
+  cartTotal,
+  productName,
+  productPrice,
+}: OrderFormProps) => {
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({
     name: "",
@@ -19,8 +39,44 @@ const OrderForm = ({ defaultQuantity = 1, showQuantity = false, onSubmit }: Orde
     note: "",
   });
 
+  const buildWhatsAppMessage = (): string => {
+    const lines: string[] = ["Hi Oyrial! I'd like to place an order.", ""];
+
+    if (cartItems && cartItems.length > 0) {
+      lines.push("🛒 Order Summary:");
+      cartItems.forEach((item) => {
+        lines.push(`• ${item.name} × ${item.quantity} — ৳${(item.price * item.quantity).toLocaleString()}`);
+      });
+      lines.push("");
+      lines.push(`Total: ৳${(cartTotal ?? 0).toLocaleString()}`);
+    } else if (productName) {
+      const qty = showQuantity ? form.quantity : 1;
+      const price = productPrice ?? 0;
+      lines.push(`🕰️ Product: ${productName}`);
+      lines.push(`Quantity: ${qty}`);
+      lines.push(`Price: ৳${(price * qty).toLocaleString()}`);
+    }
+
+    lines.push("");
+    lines.push("📋 My Details:");
+    lines.push(`Name: ${form.name}`);
+    lines.push(`Phone: ${form.phone}`);
+    lines.push(`Address: ${form.address}`);
+
+    if (form.note.trim()) {
+      lines.push(`Note: ${form.note}`);
+    }
+
+    lines.push("");
+    lines.push("Payment: Cash on Delivery");
+
+    return lines.join("\n");
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const message = encodeURIComponent(buildWhatsAppMessage());
+    window.open(`https://wa.me/8801609573884?text=${message}`, "_blank");
     setSubmitted(true);
     onSubmit?.();
   };
@@ -30,24 +86,13 @@ const OrderForm = ({ defaultQuantity = 1, showQuantity = false, onSubmit }: Orde
       <div className="py-12 text-center">
         <FadeUp>
           <CheckCircle className="mx-auto text-oyrial-charcoal" size={48} strokeWidth={1.5} />
-          <h3 className="mt-4 font-serif text-2xl text-oyrial-charcoal">Order Received!</h3>
+          <h3 className="mt-4 font-serif text-2xl text-oyrial-charcoal">Order Sent!</h3>
           <p className="mt-2 text-sm text-oyrial-muted">
-            Our team member will call you soon to confirm your order.
+            Your order has been sent to our WhatsApp. We'll confirm it shortly.
           </p>
           <p className="mt-1 text-xs text-oyrial-muted">
             Expected delivery: 3–5 business days.
           </p>
-          <p className="mt-1 text-xs text-oyrial-muted">
-            We typically call within 1–2 hours. Please keep your phone available.
-          </p>
-          <a
-            href="https://wa.me/8801609573884?text=Hi%20Oyrial!%20I%20just%20placed%20an%20order."
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-[#25D366] text-white text-sm tracking-wide rounded hover:bg-[#1fb855] transition-colors min-h-[48px]"
-          >
-            In a hurry? Chat with us →
-          </a>
         </FadeUp>
       </div>
     );
@@ -119,7 +164,7 @@ const OrderForm = ({ defaultQuantity = 1, showQuantity = false, onSubmit }: Orde
         type="submit"
         className="w-full bg-oyrial-charcoal text-oyrial-offwhite text-sm tracking-widest uppercase py-4 hover:bg-oyrial-black transition-colors min-h-[48px]"
       >
-        Place Order
+        Confirm & Send to WhatsApp
       </button>
     </form>
   );

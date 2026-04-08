@@ -166,7 +166,7 @@ const ProductPage = () => {
           >
             <div className="border-t border-oyrial-charcoal/10 pt-6">
               <h3 className="font-serif text-xl text-oyrial-charcoal mb-4">Complete Your Order</h3>
-              <OrderForm showQuantity onSubmit={() => setShowOrderForm(true)} />
+              <OrderForm showQuantity productName={product.name} productPrice={product.price} onSubmit={() => setShowOrderForm(true)} />
             </div>
           </div>
 
