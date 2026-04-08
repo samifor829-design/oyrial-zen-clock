@@ -23,6 +23,13 @@ const contactCards = [
     sub: "Follow our craft, DM us anytime",
     external: true,
   },
+  {
+    href: "https://facebook.com/oyrial",
+    icon: Facebook,
+    label: "Oyrial on Facebook",
+    sub: "Like our page, message us anytime",
+    external: true,
+  },
 ];
 
 const Contact = () => {
