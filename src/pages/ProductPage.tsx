@@ -11,11 +11,6 @@ import detailFrame from "@/assets/detail-frame.jpg";
 import detailHands from "@/assets/detail-hands.jpg";
 import detailDial from "@/assets/detail-dial.jpg";
 
-const reviews = [
-  { name: "Nusrat A.", text: "The quality is unmatched. My living room finally feels complete.", rating: 5 },
-  { name: "Rafiq H.", text: "Silent movement is a game-changer. Beautifully minimal.", rating: 5 },
-  { name: "Tania S.", text: "Arrived in a beautiful gift box. Looks even better in person.", rating: 5 },
-];
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -205,20 +200,6 @@ const ProductPage = () => {
             </table>
           </FadeUp>
 
-          <FadeUp delay={150}>
-            <h3 className="font-serif text-2xl text-oyrial-charcoal mb-6">Reviews</h3>
-            <div className="space-y-6">
-              {reviews.map((r) => (
-                <div key={r.name} className="border-b border-oyrial-charcoal/5 pb-4">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-sm">{"★".repeat(r.rating)}</span>
-                  </div>
-                  <p className="text-sm text-oyrial-charcoal italic">"{r.text}"</p>
-                  <p className="text-xs text-oyrial-muted mt-1">— {r.name}</p>
-                </div>
-              ))}
-            </div>
-          </FadeUp>
         </div>
       </div>
 
