@@ -38,19 +38,18 @@ const SECOND_PATH = `
   Z
 `;
 
-// Hour markers at 12, 3, 6, 9 only — thick wooden bars near the edge
-const MARKER_R_INNER = 168;
-const MARKER_R_OUTER = 208;
-const MARKER_POSITIONS = [0, 3, 6, 9]; // 12, 3, 6, 9 o'clock
-const markers = MARKER_POSITIONS.map((hour) => {
-  const angle = (hour * 30 - 90) * (Math.PI / 180);
-  return {
-    x1: C + MARKER_R_INNER * Math.cos(angle),
-    y1: C + MARKER_R_INNER * Math.sin(angle),
-    x2: C + MARKER_R_OUTER * Math.cos(angle),
-    y2: C + MARKER_R_OUTER * Math.sin(angle),
-  };
-});
+// Wooden number positions at 12, 3, 6, 9
+const NUMBER_R = 185;
+const numberMarkers = [
+  { label: "12", angle: -90 },
+  { label: "3", angle: 0 },
+  { label: "6", angle: 90 },
+  { label: "9", angle: 180 },
+].map(({ label, angle }) => ({
+  label,
+  x: C + NUMBER_R * Math.cos(angle * (Math.PI / 180)),
+  y: C + NUMBER_R * Math.sin(angle * (Math.PI / 180)),
+}));
 
 const HeroClock = () => {
   const rafRef = useRef<number>(0);
@@ -150,29 +149,25 @@ const HeroClock = () => {
           </filter>
         </defs>
 
-        {/* Wooden hour markers at 12, 3, 6, 9 */}
-        {markers.map((m, i) => (
-          <line
+        {/* Wooden numbers at 12, 3, 6, 9 */}
+        {numberMarkers.map((m, i) => (
+          <text
             key={i}
-            x1={m.x1} y1={m.y1}
-            x2={m.x2} y2={m.y2}
-            stroke="#5C3A1E"
-            strokeWidth="6"
-            strokeLinecap="butt"
+            x={m.x}
+            y={m.y}
+            textAnchor="middle"
+            dominantBaseline="central"
+            fontSize={m.label === "12" ? "28" : "32"}
+            fontFamily="'Cormorant Garamond', serif"
+            fontWeight="700"
+            fill="#5C3A1E"
+            stroke="#3D2410"
+            strokeWidth="0.5"
             filter="url(#handShadow)"
-          />
-        ))}
-        {/* Wood highlight on markers */}
-        {markers.map((m, i) => (
-          <line
-            key={`h-${i}`}
-            x1={m.x1} y1={m.y1}
-            x2={m.x2} y2={m.y2}
-            stroke="#8B6340"
-            strokeWidth="3"
-            strokeLinecap="butt"
-            opacity="0.6"
-          />
+            style={{ paintOrder: "stroke" }}
+          >
+            {m.label}
+          </text>
         ))}
 
         {/* Hour hand */}
