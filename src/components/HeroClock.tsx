@@ -38,11 +38,12 @@ const SECOND_PATH = `
   Z
 `;
 
-// Hour markers - brass bars like the reference image
-const MARKER_R_INNER = 175;
-const MARKER_R_OUTER = 205;
-const markers = Array.from({ length: 12 }, (_, i) => {
-  const angle = (i * 30 - 90) * (Math.PI / 180);
+// Hour markers at 12, 3, 6, 9 only — thick wooden bars near the edge
+const MARKER_R_INNER = 168;
+const MARKER_R_OUTER = 208;
+const MARKER_POSITIONS = [0, 3, 6, 9]; // 12, 3, 6, 9 o'clock
+const markers = MARKER_POSITIONS.map((hour) => {
+  const angle = (hour * 30 - 90) * (Math.PI / 180);
   return {
     x1: C + MARKER_R_INNER * Math.cos(angle),
     y1: C + MARKER_R_INNER * Math.sin(angle),
