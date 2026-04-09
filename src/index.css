@@ -110,30 +110,33 @@
   opacity: 0.4;
 }
 
-/* Scroll animation */
+/* Scroll animation — GPU accelerated */
 .fade-up {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translate3d(0, 20px, 0);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+  backface-visibility: hidden;
 }
 
 .fade-up.visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0);
 }
 
-/* Smooth page wrapper */
+/* Smooth page wrapper — GPU accelerated */
 .page-enter {
-  animation: pageIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: pageIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  backface-visibility: hidden;
 }
 
 @keyframes pageIn {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translate3d(0, 8px, 0);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 }
