@@ -15,7 +15,7 @@ const Home = () => {
   const { isInWishlist, toggleItem } = useWishlist();
 
   return (
-    <main className="page-enter">
+    <main>
       {/* HERO */}
       <section className="relative min-h-screen flex items-center justify-center bg-oyrial-offwhite overflow-hidden pt-24 md:pt-28">
         <div className="relative z-10 text-center px-6">
