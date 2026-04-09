@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import clockFace from "@/assets/clock-face-epoxy.png";
 
 const SIZE = 460;
-const C = SIZE / 2; // center
+const C = SIZE / 2;
 
-// Hour hand: short & thick
 const HOUR_PATH = `
   M ${C - 5} ${C + 10}
   L ${C - 5} ${C - 85}
@@ -16,7 +15,6 @@ const HOUR_PATH = `
   Z
 `;
 
-// Minute hand: longer & thinner
 const MINUTE_PATH = `
   M ${C - 3.5} ${C + 12}
   L ${C - 3.5} ${C - 140}
@@ -28,7 +26,6 @@ const MINUTE_PATH = `
   Z
 `;
 
-// Second hand: very thin & long
 const SECOND_PATH = `
   M ${C - 0.5} ${C + 28}
   L ${C - 0.5} ${C - 165}
@@ -38,7 +35,6 @@ const SECOND_PATH = `
   Z
 `;
 
-// Wooden number positions at 12, 3, 6, 9
 const NUMBER_R = 165;
 const numberMarkers = [
   { label: "12", angle: -90 },
@@ -52,26 +48,31 @@ const numberMarkers = [
 }));
 
 const HeroClock = () => {
-  const rafRef = useRef<number>(0);
-  const [angles, setAngles] = useState({ h: 0, m: 0, s: 0 });
+  const hourRef = useRef<SVGGElement>(null);
+  const minRef = useRef<SVGGElement>(null);
+  const secRef = useRef<SVGGElement>(null);
 
   useEffect(() => {
+    let raf: number;
     const tick = () => {
       const now = new Date();
       const ms = now.getMilliseconds();
       const s = now.getSeconds() + ms / 1000;
       const m = now.getMinutes() + s / 60;
       const h = (now.getHours() % 12) + m / 60;
-      setAngles({ h: h * 30, m: m * 6, s: s * 6 });
-      rafRef.current = requestAnimationFrame(tick);
+
+      if (hourRef.current) hourRef.current.setAttribute("transform", `rotate(${h * 30} ${C} ${C})`);
+      if (minRef.current) minRef.current.setAttribute("transform", `rotate(${m * 6} ${C} ${C})`);
+      if (secRef.current) secRef.current.setAttribute("transform", `rotate(${s * 6} ${C} ${C})`);
+
+      raf = requestAnimationFrame(tick);
     };
-    rafRef.current = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(rafRef.current);
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
   }, []);
 
   return (
     <div className="relative mx-auto h-[420px] w-[420px] sm:h-[550px] sm:w-[550px] md:h-[690px] md:w-[690px]">
-      {/* Clock face image */}
       <img
         src={clockFace}
         alt="Premium epoxy resin and wood wall clock"
@@ -85,7 +86,6 @@ const HeroClock = () => {
         draggable={false}
       />
 
-
       <svg
         viewBox={`0 0 ${SIZE} ${SIZE}`}
         className="absolute inset-0 h-full w-full"
@@ -98,35 +98,29 @@ const HeroClock = () => {
             <stop offset="50%" stopColor="#0d0d0d" />
             <stop offset="100%" stopColor="#1a1a1a" />
           </linearGradient>
-
           <linearGradient id="walnutEdge" x1="0" y1="0" x2="1" y2="0">
             <stop offset="0%" stopColor="#000000" stopOpacity="0.4" />
             <stop offset="50%" stopColor="#000000" stopOpacity="0" />
             <stop offset="100%" stopColor="#000000" stopOpacity="0.4" />
           </linearGradient>
-
           <linearGradient id="walnutHighlight" x1="0" y1="0" x2="1" y2="0">
             <stop offset="0%" stopColor="#444444" stopOpacity="0" />
             <stop offset="50%" stopColor="#444444" stopOpacity="0.2" />
             <stop offset="100%" stopColor="#444444" stopOpacity="0" />
           </linearGradient>
-
           <pattern id="grainPattern" width="4" height="80" patternUnits="userSpaceOnUse">
             <line x1="1" y1="0" x2="1" y2="80" stroke="#000000" strokeWidth="0.3" strokeOpacity="0.1" />
           </pattern>
-
           <linearGradient id="secondFill" x1="0" y1="0" x2="1" y2="0">
             <stop offset="0%" stopColor="#1a1a1a" />
             <stop offset="50%" stopColor="#000000" />
             <stop offset="100%" stopColor="#1a1a1a" />
           </linearGradient>
-
           <radialGradient id="brass" cx="40%" cy="35%">
             <stop offset="0%" stopColor="#D4AF37" />
             <stop offset="50%" stopColor="#B8952C" />
             <stop offset="100%" stopColor="#8B7020" />
           </radialGradient>
-
           <filter id="handShadow" x="-10%" y="-5%" width="120%" height="115%">
             <feDropShadow dx="0.5" dy="1.5" stdDeviation="1.2" floodColor="rgba(30,18,8,0.25)" />
           </filter>
@@ -135,7 +129,6 @@ const HeroClock = () => {
           </filter>
         </defs>
 
-        {/* Wooden numbers at 12, 3, 6, 9 */}
         {numberMarkers.map((m, i) => (
           <text
             key={i}
@@ -157,7 +150,7 @@ const HeroClock = () => {
         ))}
 
         {/* Hour hand */}
-        <g transform={`rotate(${angles.h} ${C} ${C})`} filter="url(#handShadow)">
+        <g ref={hourRef} filter="url(#handShadow)">
           <path d={HOUR_PATH} fill="url(#walnut)" />
           <path d={HOUR_PATH} fill="url(#walnutEdge)" />
           <path d={HOUR_PATH} fill="url(#walnutHighlight)" />
@@ -166,7 +159,7 @@ const HeroClock = () => {
         </g>
 
         {/* Minute hand */}
-        <g transform={`rotate(${angles.m} ${C} ${C})`} filter="url(#handShadow)">
+        <g ref={minRef} filter="url(#handShadow)">
           <path d={MINUTE_PATH} fill="url(#walnut)" />
           <path d={MINUTE_PATH} fill="url(#walnutEdge)" />
           <path d={MINUTE_PATH} fill="url(#walnutHighlight)" />
@@ -175,7 +168,7 @@ const HeroClock = () => {
         </g>
 
         {/* Second hand */}
-        <g transform={`rotate(${angles.s} ${C} ${C})`} filter="url(#thinShadow)">
+        <g ref={secRef} filter="url(#thinShadow)">
           <path d={SECOND_PATH} fill="url(#secondFill)" />
         </g>
 

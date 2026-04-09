@@ -57,6 +57,7 @@
 
   html {
     scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
   }
 
   body {
@@ -64,15 +65,17 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
-  /* Smooth global transitions */
+  /* GPU-accelerated smooth transitions */
   a, button {
-    @apply transition-all duration-300 ease-out;
+    transition: color 0.25s ease, background-color 0.25s ease, opacity 0.25s ease, transform 0.25s ease;
+    will-change: auto;
   }
 
   img {
-    @apply transition-all duration-500 ease-out;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
   }
 
   h1, h2, h3, h4, h5, h6 {
