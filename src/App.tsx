@@ -40,6 +40,7 @@ const App = () => (
             <CartProvider>
               <Sonner />
               <BrowserRouter>
+                <ScrollToTop />
                 <AppContent />
                 <Header />
                 <PageTransition>
