@@ -9,6 +9,7 @@ import { ThemeProvider } from "@/context/ThemeContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import ScrollToTop from "@/components/ScrollToTop";
 import PageTransition from "@/components/PageTransition";
 import Index from "./pages/Index";
 import Shop from "./pages/Shop";
@@ -39,6 +40,7 @@ const App = () => (
             <CartProvider>
               <Sonner />
               <BrowserRouter>
+                <ScrollToTop />
                 <AppContent />
                 <Header />
                 <PageTransition>
