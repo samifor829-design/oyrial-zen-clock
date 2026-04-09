@@ -90,7 +90,7 @@ const HeroClock = () => {
         viewBox={`0 0 ${SIZE} ${SIZE}`}
         className="absolute inset-0 h-full w-full"
         aria-hidden="true"
-        style={{ pointerEvents: "none" }}
+        style={{ pointerEvents: "none", transform: "translateZ(0)", backfaceVisibility: "hidden" }}
       >
         <defs>
           <linearGradient id="walnut" x1="0" y1="0" x2="0.3" y2="1">
