@@ -118,20 +118,22 @@ const Header = () => {
         </div>
 
         {/* Mobile menu */}
-        {open && (
-          <div className="md:hidden pb-6 bg-white">
-            {links.map((l) => (
-              <Link
-                key={l.to}
-                to={l.to}
-                onClick={() => setOpen(false)}
-                className="block px-6 py-3 text-sm tracking-widest uppercase text-foreground"
-              >
-                {l.label}
-              </Link>
-            ))}
-          </div>
-        )}
+        <div
+          className={`md:hidden overflow-hidden bg-white transition-all duration-400 ease-out ${
+            open ? "max-h-60 opacity-100 pb-6" : "max-h-0 opacity-0 pb-0"
+          }`}
+        >
+          {links.map((l) => (
+            <Link
+              key={l.to}
+              to={l.to}
+              onClick={() => setOpen(false)}
+              className="block px-6 py-3 text-sm tracking-widest uppercase text-foreground hover:pl-8 transition-all duration-300"
+            >
+              {l.label}
+            </Link>
+          ))}
+        </div>
       </header>
       <SearchBar open={searchOpen} onClose={() => setSearchOpen(false)} />
       <AuthModal open={authOpen} onOpenChange={setAuthOpen} />
